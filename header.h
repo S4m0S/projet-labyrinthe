@@ -19,9 +19,9 @@ typedef struct tresor{
     char affiche;
 };
 
-typedef struct {
+typedef struct joueur {
     position* piece;
     bool trouve;
     char affichage;
     
-}
+};
