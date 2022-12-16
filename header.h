@@ -3,11 +3,10 @@
 #include <stdlib.h>
 
 
+
 typedef struct {
     position* piece;
-    bool trouve
+    bool trouve;
+    char affichage;
     
 }
-{
-    /* data */
-};
