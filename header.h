@@ -3,7 +3,11 @@
 #include <stdlib.h>
 
 
-struct header
+typedef struct {
+    position* piece;
+    bool trouve
+    
+}
 {
     /* data */
 };
