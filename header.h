@@ -13,11 +13,23 @@ typedef struct tresor{
     position* piece;
     bool find;
     char affiche;
+    
 };
 
 typedef struct joueur {
-    position* piece;
-    bool trouve;
-    char affichage;
-    
+    position piece;
+    int score;
+    char affiche;
+    string nom;
+    tresor listeTresor[];
+
+
+};
+
+typedef struct tuile{
+    int type;
+    position posActuelle;
+    tresor treasure;
+    bool oove;
+    int orientation;
 };
