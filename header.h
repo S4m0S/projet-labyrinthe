@@ -22,8 +22,6 @@ typedef struct joueur {
     char affiche;
     string nom;
     tresor listeTresor[];
-
-
 };
 
 typedef struct tuile{
