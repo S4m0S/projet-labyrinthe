@@ -1,6 +1,9 @@
 #include "header.h"
 int main(int argc, char *argv[])
 {
-    print("%i", argc);
+    if(!init())
+        return 1;
+    printf("\n");
+    printf("%i\n", argc);
     return 0;
 }
