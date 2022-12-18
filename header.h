@@ -22,21 +22,21 @@ typedef struct position{
 }position;
 
 typedef struct tresor{
-    position* piece;
-    bool find;
-    char affiche;
-    
+    position* piece;        // addresse de la position de la pièce sur laquelle ce trouve le tresor
+    bool find;              // le tresor a-t-il déja etait trouvé
+    char affiche;           
+
 }tresor;
 
 typedef struct joueur {
     position piece;
-    int score;
+    int score;              
     char affiche;
     string nom;
     tresor listeTresor[];
 }joueur;
 
-typedef struct tuile{
+typedef struct tuile{           // !! On doit trouver un moyen de voir où la pièce est "ouverte", c'est a dire si le joueur peut passer ou si il y a un mur 
     int type;
     position posActuelle;
     tresor treasure;
@@ -51,17 +51,19 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
 void affichageCase(const char** fond);
 
 
-bool init(void)
-{
+
+
+bool init(void)         // fonction d'initialisation du jeu une fois celle-ci effectuer on peut commencer a jouer 
+{                       // elle permet d'initialiser toutes les tuiles, de gerer le nombre de joueurs, la distrubution des cartes trésor...
     srand(time(NULL));
-    const char typeT[tailleCase][tailleCase] = {{'#','#','#'},{'#',' ','#'},{'#',' ','#'}}; // type 0
-    const char typeL[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ',' '},{'#','#','#'}}; // type 1
-    const char typeI[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ','#'},{'#',' ','#'}}; // type 2
+    const char typeT[tailleCase][tailleCase] = {{'#','#','#'},{'#',' ','#'},{'#',' ','#'}}; // type 0 : representation des pièces
+    const char typeL[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ',' '},{'#','#','#'}}; // type 1 : sur le plateau grace a cela
+    const char typeI[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ','#'},{'#',' ','#'}}; // type 2 : on peut les affichers
     const char** typeTpointer = typeT;
     const char** typeLpointer = typeL;
     const char** typeIpointer = typeI;
-    const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; 
-    tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe];
+    const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
+    tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // creation du tableau contenant le plateau de jeu avec toutes les tuiles
     initialisationTuiles(tableauTuiles);
     printElement(tableauTuiles,typeTuile);
     // afficher les elements 
@@ -108,23 +110,27 @@ void affichageCase(const char** fond)
 }
 
 
+
+
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe])
-{
-    int tuileTnombreAvecTresor = 6;     // ICI type 0 pour check l'aleatoire    
-    int tuileLnombreAvecTresor = 6;     // ICI type 1 pour check l'aleatoire
-    int tuileLnombre = 10;              // ICI type 2 pour check l'aleatoire
+{   // cette fonction permet d'initialiser les tuiles du tableau aléatoirement 
+    // elle s'occupe de la mise en place des tuiles dans le tableau passer en parrametre
+
+    int tuileTnombreAvecTresor = 6;     // ICI type 0 pour check l'aleatoire  : Ces vairiables servent à compter le nombre de
+    int tuileLnombreAvecTresor = 6;     // ICI type 1 pour check l'aleatoire  : pièces disponibles lors de l'attribution 
+    int tuileLnombre = 10;              // ICI type 2 pour check l'aleatoire  : aléatoire de celle-ci
     int tuileInombre = 12;              // ICI type 3 pour check l'aleatoire
-    int typeTuileAleatoire;
-    bool possible;
+    int typeTuileAleatoire;             // Vairable pour faire un choix entre les 4 variables ci-dessus
+    bool possible;                      // check si la pièce aleatoire est bien disponible 
     for(int i = 0;i<tailleLabyrinthe;i++)
     {
         for(int j = 0;j<tailleLabyrinthe;j++)
         {
-            tuile actuel;
-            if(i==(0,2,4,6) || j==(0,2,4,6))
+            tuile actuel;           // initialisationd de la tuile actuelle, celle-ci sera ensuite inserer dans le tableau
+            if(i==(0,2,4,6) || j==(0,2,4,6))    // on regarde si la pièce est une pièce qui ne peut pas bouger
             {
                 actuel.moove = false;
-                actuel.orientation = 0;
+                actuel.orientation = 0;         // si c'est le cas, on l'initialise comme tel 
                 switch (i)
                 {
                     case 0:
@@ -199,7 +205,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                 
             }
             else
-            {
+            {                               // si ce n'esy pas le cas, on prend une pièce aléatoire dispo dans un sens aléatoire
                 actuel.moove = true;
                 actuel.orientation = rand() % 4;
                 // donner un type a chaque tuile en aleatoirement mais en faisant attetion que ce type de tuile est tjs dispo
@@ -208,7 +214,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                     typeTuileAleatoire = rand() % 4;
                     printf("i = %i ; j = %i",i,j);
                     //printf("%i\n",typeTuileAleatoire);
-                    switch (typeTuileAleatoire)
+                    switch (typeTuileAleatoire) // check de si la pièce aleatoire est dipso
                     {
                     case 0:
                         if(tuileTnombreAvecTresor != 0)
