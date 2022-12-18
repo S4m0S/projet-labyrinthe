@@ -48,7 +48,7 @@ typedef struct tuile{           // !! On doit trouver un moyen de voir où la pi
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3]);
 bool init(void);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
-void affichageCase(const char** fond);
+void affichageCase(const char fond[3][3]);
 
 
 
@@ -92,7 +92,7 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
     }
 }
 
-void affichageCase(const char** fond)
+void affichageCase(const char fond[3][3])
 {
     // comment faire pour affiche en fonction du type ???
     for(int i = 0;i<tailleCase;i++)
@@ -118,7 +118,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
 
     int tuileTnombreAvecTresor = 6;     // ICI type 0 pour check l'aleatoire  : Ces vairiables servent à compter le nombre de
     int tuileLnombreAvecTresor = 6;     // ICI type 1 pour check l'aleatoire  : pièces disponibles lors de l'attribution 
-    int tuileLnombre = 10;              // ICI type 2 pour check l'aleatoire  : aléatoire de celle-ci
+    int tuileLnombre = 100;              // ICI type 2 pour check l'aleatoire  : aléatoire de celle-ci
     int tuileInombre = 12;              // ICI type 3 pour check l'aleatoire
     int typeTuileAleatoire;             // Vairable pour faire un choix entre les 4 variables ci-dessus
     bool possible;                      // check si la pièce aleatoire est bien disponible 
@@ -129,6 +129,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             tuile actuel;           // initialisationd de la tuile actuelle, celle-ci sera ensuite inserer dans le tableau
             if(i==(0,2,4,6) || j==(0,2,4,6))    // on regarde si la pièce est une pièce qui ne peut pas bouger
             {
+                // le test ci dessus est peut etre pas bon en fait 
                 actuel.moove = false;
                 actuel.orientation = 0;         // si c'est le cas, on l'initialise comme tel 
                 switch (i)
@@ -212,8 +213,6 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                 do{
                     possible = false;
                     typeTuileAleatoire = rand() % 4;
-                    printf("i = %i ; j = %i",i,j);
-                    //printf("%i\n",typeTuileAleatoire);
                     switch (typeTuileAleatoire) // check de si la pièce aleatoire est dipso
                     {
                     case 0:
