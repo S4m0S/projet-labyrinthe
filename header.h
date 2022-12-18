@@ -7,6 +7,9 @@
 #define false 0
 #define tailleCase 3
 #define tailleLabyrinthe 7
+#define typeTuileEnT 500
+#define typeTuileEnL 501
+#define typeTuileEnI 502
 
 typedef char* string;
 typedef short int bool; 
@@ -42,9 +45,10 @@ typedef struct tuile{
 }tuile;
 
 
-void printElement(const char fond[tailleCase][tailleCase]);
+void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char* typeTuile[3]);
 bool init(void);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
+void affichageCase(const char fond[tailleCase][tailleCase]);
 
 
 bool init(void)
@@ -53,6 +57,7 @@ bool init(void)
     const char typeT[tailleCase][tailleCase] = {{'#','#','#'},{'#',' ','#'},{'#',' ','#'}}; // type 0
     const char typeL[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ',' '},{'#','#','#'}}; // type 1
     const char typeI[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ','#'},{'#',' ','#'}}; // type 2
+    const char* typeTuile[3] = {&typeT, &typeL, &typeI}; 
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe];
     // afficher les elements 
     return true;
@@ -60,7 +65,7 @@ bool init(void)
 
 
 //  fonction de test 
-void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe])
+void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char* typeTuile[3])
 { 
     for(int p = 0;p<tailleLabyrinthe;p++);
     {
@@ -68,24 +73,18 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe])
         {
             // gerer l'orientation ici 
             // suite dans la fonction affichage case 
-            for(int i = 0;i<tailleCase;i++)
-            {
-                for(int j = 0;j<tailleCase;j++)
-                {
-                    if(fond[i][j]==' ')
-                        printf("   ");
-                    else
-                        printf("%c",fond[i][j]);
-                }
-                if(i!=2)
-                    printf("\n");
-            }
+            if(tableauTuile[p][v].type == typeTuileEnT)
+                affichageCase(typeTuile[0]);
+            else if(tableauTuile[p][v].type == typeTuileEnL)
+                afiicheCase(typeTuile[1]);
+            else
+                affichageCase(typeTuile[2]);
         }
         printf("\n");
     }
 }
 
-void affichageCase(tuile aAfficher)
+void affichageCase(const char fond[tailleCase][tailleCase])
 {
     // comment faire pour affiche en fonction du type ???
     for(int i = 0;i<tailleCase;i++)
@@ -126,24 +125,24 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         switch (j)
                         {
                         case 0:
-                            actuel.type = 1;
+                            actuel.type = typeTuileEnL;
                             actuel.orientation = 1;
                             // pas de tresor mais depart d'un joueur ici 
                             break;
                         case 2 || 4:
-                            actuel.type = 0;
+                            actuel.type = typeTuileEnT;
                             actuel.orientation = 0;
                             // tresor !!!
                             break;
                         case 6:
-                            actuel.type = 1;
+                            actuel.type = typeTuileEnL;
                             actuel.orientation = 2;
                             // tresor !!
                             break;
                         }
                         break;
                     case 2 :
-                        actuel.type = 0;
+                        actuel.type = typeTuileEnT;
                         switch (j)
                         {
                         case 0 || 2:
@@ -158,7 +157,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         }
                         break;
                     case 4 :
-                        actuel.type = 0;
+                        actuel.type = typeTuileEnT;
                         switch (j)
                         {
                         case 0:
@@ -179,14 +178,14 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         switch (j)
                         {       
                         case 0:
-                            actuel.type = 1;
+                            actuel.type = typeTuileEnL;
                             actuel.orientation = 0;
                             break;
                         case 2 || 4: 
-                            actuel.type = 0;
+                            actuel.type = typeTuileEnT;
                             actuel.orientation = 2;
                         case 6:
-                            actuel.type = 1;
+                            actuel.type = typeTuileEnL;
                             actuel.orientation = 3;
                         }
                         break;
@@ -199,45 +198,44 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                 actuel.orientation = rand() % 4;
                 // donner un type a chaque tuile en aleatoirement mais en faisant attetion que ce type de tuile est tjs dispo
                 do{
-                    possible = true;
+                    possible = false;
                     typeTuileAleatoire = rand() % 4;
                     switch (typeTuileAleatoire)
                     {
                     case 0:
-                        if(tuileTnombreAvecTresor == 0)
-                            possible = false;
+                        if(tuileTnombreAvecTresor != 0)
+                        {
+                            possible = true;
+                            actuel.type = typeTuileEnT;
+                            tuileTnombreAvecTresor--;
+                        }
                         break;
                     case 1:
-                        if(tuileLnombreAvecTresor==0)
-                            possible =false;
+                        if(tuileLnombreAvecTresor!=0)
+                        {
+                            possible =true;
+                            actuel.type = typeTuileEnL;
+                            tuileLnombreAvecTresor--;
+                        }
                         break;
                     case 2:
-                        if(tuileLnombre == 0)
-                            possible = false;
+                        if(tuileLnombre != 0)
+                        {
+                            possible = true;
+                            actuel.type = typeTuileEnL;
+                            tuileLnombre--;
+                        }
                         break;
                     case 3:
-                        if(tuileInombre==0)
-                            possible = false;
+                        if(tuileInombre!=0)
+                        {
+                            possible = true;
+                            actuel.type = typeTuileEnI;
+                            tuileInombre--;
+                        }
                         break;
                     }
                 }while(possible==false);
-                switch (typeTuileAleatoire)
-                {
-                case 0:
-                    actuel.type = 0;
-                    // tresor !!!
-                    break;
-                case 1 : 
-                    actuel.type = 1;
-                    //tresor !!!
-                    break;
-                case 2 : 
-                    actuel.type = 1;
-                    break;
-                case 3 :
-                    actuel.type = 2;
-                    break;
-                }
             }
             position posActuel;
             posActuel.x = i;
