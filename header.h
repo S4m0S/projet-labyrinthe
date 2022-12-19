@@ -63,8 +63,8 @@ bool init(void)         // fonction d'initialisation du jeu une fois celle-ci ef
     const char** typeLpointer = typeL;
     const char** typeIpointer = typeI;
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
-    tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // creation du tableau contenant le plateau de jeu avec toutes les tuiles
-    initialisationTuiles(tableauTuiles);
+    tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // tableau contenant le plateau de jeu avec toutes les tuiles
+    initialisationTuiles(tableauTuiles);  
     printElement(tableauTuiles,typeTuile);
     // afficher les elements 
     return true;
@@ -74,21 +74,18 @@ bool init(void)         // fonction d'initialisation du jeu une fois celle-ci ef
 //  fonction de test 
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3])
 { 
-    int i,j;
-    for( i = 0;i<tailleLabyrinthe;i++);
+    for(int i = 0 ; i<tailleLabyrinthe;i++)
     {
-        for( j= 0;j<tailleLabyrinthe;j++)
+        for(int j = 0;j<tailleLabyrinthe;j++)
         {
             // gerer l'orientation ici 
             // suite dans la fonction affichage case 
-            /*
             if(tableauTuile[i][j].type == typeTuileEnT)
                 affichageCase(typeTuile[0]);
             else if(tableauTuile[i][j].type == typeTuileEnL)
                 affichageCase(typeTuile[1]);
             else
-                affichageCase(typeTuile[2]);*/
-            printf("type = %i",tableauTuile[i][j].type);
+                affichageCase(typeTuile[2]);
         }
         printf("\n");
     }
@@ -128,6 +125,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
     {
         for(int j = 0;j<tailleLabyrinthe;j++)
         {
+            
             tuile actuel;           // initialisationd de la tuile actuelle, celle-ci sera ensuite inserer dans le tableau
             if(i==(0,2,4,6) || j==(0,2,4,6))    // on regarde si la pièce est une pièce qui ne peut pas bouger
             {
@@ -258,7 +256,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             posActuel.x = i;
             posActuel.y = j;
             actuel.posActuelle = posActuel;
-            
+            tableauTuile[i][j] = actuel;
         }
     }
 }
