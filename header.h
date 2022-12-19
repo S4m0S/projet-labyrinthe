@@ -48,7 +48,7 @@ typedef struct tuile{           // !! On doit trouver un moyen de voir où la pi
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3]);
 bool init(void);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
-void affichageCase(const char fond[3][3],int k);
+void affichageCase(const char fond[3][3],int k,int orientation);
 
 
 
@@ -56,7 +56,7 @@ void affichageCase(const char fond[3][3],int k);
 bool init(void)         // fonction d'initialisation du jeu une fois celle-ci effectuer on peut commencer a jouer 
 {                       // elle permet d'initialiser toutes les tuiles, de gerer le nombre de joueurs, la distrubution des cartes trésor...
     srand(time(NULL));
-    const char typeT[tailleCase][tailleCase] = {{'#','#','#'},{'#',' ','#'},{'#',' ','#'}}; // type 0 : representation des pièces
+    const char typeT[tailleCase][tailleCase] = {{'#','#','#'},{' ',' ',' '},{'#',' ','#'}}; // type 0 : representation des pièces
     const char typeL[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ',' '},{'#','#','#'}}; // type 1 : sur le plateau grace a cela
     const char typeI[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ','#'},{'#',' ','#'}}; // type 2 : on peut les affichers
     const char** typeTpointer = typeT;
@@ -64,7 +64,8 @@ bool init(void)         // fonction d'initialisation du jeu une fois celle-ci ef
     const char** typeIpointer = typeI;
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // tableau contenant le plateau de jeu avec toutes les tuiles
-    initialisationTuiles(tableauTuiles);  
+    initialisationTuiles(tableauTuiles);
+    printf("orientation gauche : %i; orientation droite : %i\n",tableauTuiles[0][0].orientation,tableauTuiles[0][6].orientation);
     printElement(tableauTuiles,typeTuile);
     // afficher les elements 
     return true;
@@ -83,28 +84,61 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
                 // gerer l'orientation ici 
                 // suite dans la fonction affichage case 
                 if(tableauTuile[i][j].type == typeTuileEnT)
-                    affichageCase(typeTuile[0],k);
+                    affichageCase(typeTuile[0],k,tableauTuile[i][j].orientation);
                 else if(tableauTuile[i][j].type == typeTuileEnL)
-                    affichageCase(typeTuile[1],k);
+                    affichageCase(typeTuile[1],k,tableauTuile[i][j].orientation);
                 else
-                    affichageCase(typeTuile[2],k);
+                    affichageCase(typeTuile[2],k,tableauTuile[i][j].orientation);
             }
             printf("\n");
         }
+        printf("\n\n");
     }
 }
 
-void affichageCase(const char fond[3][3],int k)
+void affichageCase(const char fond[3][3],int k,int orientation)
 {
     // comment faire pour affiche en fonction du type ???
-    for(int j = 0;j<tailleCase;j++)
+    switch (orientation)
     {
-        if(fond[k][j]==' ')
-            printf("   ");
-        else
-            printf("%c",fond[k][j]);
+        case 0:
+            for(int j = 0;j<tailleCase;j++)
+            {
+            if(fond[k][j]==' ')
+                printf(" ");
+            else
+                printf("%c",fond[k][j]);
+            }
+            break;
+        case 1:
+            for(int j = 0;j<tailleCase;j++)
+            {
+            if(fond[j][k]==' ')
+                printf(" ");
+            else
+                printf("%c",fond[j][k]);
+            }
+            break;
+        case 2:
+            for(int j = 0;j<tailleCase;j++)
+            {
+            if(fond[2-k][j]==' ')
+                printf(" ");
+            else
+                printf("%c",fond[2-k][j]);
+            }
+            break;
+        case 3:
+            for(int j = 2;j<0;j--)
+            {
+            if(fond[j][k]==' ')
+                printf(" ");
+            else
+                printf("%c",fond[j][k]);
+            }
+            break;
     }
-    //printf("   ");
+    printf("  ");
 }
 
 
@@ -120,15 +154,20 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
     int tuileInombre = 12;              // ICI type 3 pour check l'aleatoire
     int typeTuileAleatoire;             // Vairable pour faire un choix entre les 4 variables ci-dessus
     bool possible;                      // check si la pièce aleatoire est bien disponible 
+    int checkValue[4] = {0,2,4,6};      // valeur pour lesquels le tes pièces seront immobiles
+    bool checkImmobile;
     for(int i = 0;i<tailleLabyrinthe;i++)
     {
         for(int j = 0;j<tailleLabyrinthe;j++)
         {
             
             tuile actuel;           // initialisationd de la tuile actuelle, celle-ci sera ensuite inserer dans le tableau
-            if(i==(0,2,4,6) || j==(0,2,4,6))    // on regarde si la pièce est une pièce qui ne peut pas bouger
+            checkImmobile = false;
+            // faire un test qui doit donner checkImmobile = true si la tuile est une tuile basique (0,0) (0,2) (0,4) ...
+            if(checkImmobile==true)    // on regarde si la pièce est une pièce qui ne peut pas bouger
             {
-                // le test ci dessus est peut etre pas bon en fait 
+                // le test ci dessus est peut etre pas bon en fait
+                printf("Passage par les tuiles de base; i = %i ; j = %i\n",i,j); 
                 actuel.moove = false;
                 actuel.orientation = 0;         // si c'est le cas, on l'initialise comme tel 
                 switch (i)
