@@ -81,12 +81,14 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
         {
             // gerer l'orientation ici 
             // suite dans la fonction affichage case 
+            /*
             if(tableauTuile[i][j].type == typeTuileEnT)
                 affichageCase(typeTuile[0]);
             else if(tableauTuile[i][j].type == typeTuileEnL)
                 affichageCase(typeTuile[1]);
             else
-                affichageCase(typeTuile[2]);
+                affichageCase(typeTuile[2]);*/
+            printf("type = %i",tableauTuile[i][j].type);
         }
         printf("\n");
     }
