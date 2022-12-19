@@ -98,7 +98,7 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
 
 void affichageCase(const char fond[3][3],int k,int orientation)
 {
-    // comment faire pour affiche en fonction du type ???
+    // Verifier l'affichage en fonction de l'orientation because c'est bizzare la actuellement
     switch (orientation)
     {
         case 0:
@@ -150,7 +150,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
 
     int tuileTnombreAvecTresor = 6;     // ICI type 0 pour check l'aleatoire  : Ces vairiables servent à compter le nombre de
     int tuileLnombreAvecTresor = 6;     // ICI type 1 pour check l'aleatoire  : pièces disponibles lors de l'attribution 
-    int tuileLnombre = 100;              // ICI type 2 pour check l'aleatoire  : aléatoire de celle-ci
+    int tuileLnombre = 10;              // ICI type 2 pour check l'aleatoire  : aléatoire de celle-ci
     int tuileInombre = 12;              // ICI type 3 pour check l'aleatoire
     int typeTuileAleatoire;             // Vairable pour faire un choix entre les 4 variables ci-dessus
     bool possible;                      // check si la pièce aleatoire est bien disponible 
@@ -163,7 +163,14 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             
             tuile actuel;           // initialisationd de la tuile actuelle, celle-ci sera ensuite inserer dans le tableau
             checkImmobile = false;
-            // faire un test qui doit donner checkImmobile = true si la tuile est une tuile basique (0,0) (0,2) (0,4) ...
+            for(int p = 0;p<4;p++)
+            {
+                for(int m = 0;m<4;m++)
+                {
+                    if(checkValue[p]==i && checkValue[m]==j)
+                        checkImmobile=true;
+                }
+            }
             if(checkImmobile==true)    // on regarde si la pièce est une pièce qui ne peut pas bouger
             {
                 // le test ci dessus est peut etre pas bon en fait
