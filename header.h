@@ -48,7 +48,7 @@ typedef struct tuile{           // !! On doit trouver un moyen de voir où la pi
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3]);
 bool init(void);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
-void affichageCase(const char fond[3][3]);
+void affichageCase(const char fond[3][3],int k);
 
 
 
@@ -73,39 +73,38 @@ bool init(void)         // fonction d'initialisation du jeu une fois celle-ci ef
 
 //  fonction de test 
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3])
-{ 
+{   
     for(int i = 0 ; i<tailleLabyrinthe;i++)
     {
-        for(int j = 0;j<tailleLabyrinthe;j++)
+        for(int k =0;k<tailleCase;k++)
         {
-            // gerer l'orientation ici 
-            // suite dans la fonction affichage case 
-            if(tableauTuile[i][j].type == typeTuileEnT)
-                affichageCase(typeTuile[0]);
-            else if(tableauTuile[i][j].type == typeTuileEnL)
-                affichageCase(typeTuile[1]);
-            else
-                affichageCase(typeTuile[2]);
+            for(int j = 0;j<tailleLabyrinthe;j++)
+            {
+                // gerer l'orientation ici 
+                // suite dans la fonction affichage case 
+                if(tableauTuile[i][j].type == typeTuileEnT)
+                    affichageCase(typeTuile[0],k);
+                else if(tableauTuile[i][j].type == typeTuileEnL)
+                    affichageCase(typeTuile[1],k);
+                else
+                    affichageCase(typeTuile[2],k);
+            }
+            printf("\n");
         }
-        printf("\n");
     }
 }
 
-void affichageCase(const char fond[3][3])
+void affichageCase(const char fond[3][3],int k)
 {
     // comment faire pour affiche en fonction du type ???
-    for(int i = 0;i<tailleCase;i++)
+    for(int j = 0;j<tailleCase;j++)
     {
-        for(int j = 0;j<tailleCase;j++)
-        {
-            if(fond[i][j]==' ')
-                printf("   ");
-            else
-                printf("%c",fond[i][j]);
-        }
-        if(i!=2)
-            printf("\n");
+        if(fond[k][j]==' ')
+            printf("   ");
+        else
+            printf("%c",fond[k][j]);
     }
+    //printf("   ");
 }
 
 
