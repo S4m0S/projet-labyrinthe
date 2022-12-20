@@ -65,31 +65,7 @@ bool init(void)         // fonction d'initialisation du jeu une fois celle-ci ef
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // tableau contenant le plateau de jeu avec toutes les tuiles
     initialisationTuiles(tableauTuiles);
-    for(int k = 0;k<tailleCase;k++)
-    { 
-        affichageCase(typeT,k,0);
-        printf("\n");
-    }
-    printf("\n");
-    for(int k = 0;k<tailleCase;k++)
-    { 
-        affichageCase(typeT,k,1);
-        printf("\n");
-    }
-    printf("\n");
-    for(int k = 0;k<tailleCase;k++)
-    { 
-        affichageCase(typeT,k,2);
-        printf("\n");
-    }
-    printf("\n");
-    for(int k = 0;k<tailleCase;k++)
-    { 
-        affichageCase(typeT,k,3);
-        printf("\n");
-    }
-    printf("\n");
-    //printElement(tableauTuiles,typeTuile);
+    printElement(tableauTuiles,typeTuile);
     // afficher les elements 
     return true;
 }
@@ -115,6 +91,10 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
             }
             printf("\n");
         }
+        for(int j = 0;j<tailleLabyrinthe;j++)
+        {
+            printf("type : %i   ",tableauTuile[i][j].type);
+        }
         printf("\n\n");
     }
 }
@@ -133,24 +113,6 @@ void affichageCase(const char fond[3][3],int k,int orientation)
                 printf("%c",fond[k][j]);
             }
             break;
-        case 2:
-            for(int j = 0;j<tailleCase;j++)
-            {
-            if(fond[j][k]==' ')
-                printf(" ");
-            else
-                printf("%c",fond[j][k]);
-            }
-            break;
-        case 3:
-            for(int j = 0;j<tailleCase;j++)
-            {
-            if(fond[2-k][j]==' ')
-                printf(" ");
-            else
-                printf("%c",fond[2-k][j]);
-            }
-            break;
         case 1:
             for(int j = 0;j<tailleCase;j++)
             {
@@ -158,6 +120,24 @@ void affichageCase(const char fond[3][3],int k,int orientation)
                 printf(" ");
             else
                 printf("%c",fond[2-j][k]);
+            }
+            break;
+        case 2:
+            for(int j = 0;j<tailleCase;j++)
+            {
+            if(fond[2-k][2-j]==' ')
+                printf(" ");
+            else
+                printf("%c",fond[2-k][2-j]);
+            }
+            break;
+        case 3:
+            for(int j = 0;j<tailleCase;j++)
+            {
+            if(fond[j][2-k]==' ')
+                printf(" ");
+            else
+                printf("%c",fond[j][2-k]);
             }
             break;
     }
