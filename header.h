@@ -65,8 +65,31 @@ bool init(void)         // fonction d'initialisation du jeu une fois celle-ci ef
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // tableau contenant le plateau de jeu avec toutes les tuiles
     initialisationTuiles(tableauTuiles);
-    printf("orientation gauche : %i; orientation droite : %i\n",tableauTuiles[0][0].orientation,tableauTuiles[0][6].orientation);
-    printElement(tableauTuiles,typeTuile);
+    for(int k = 0;k<tailleCase;k++)
+    { 
+        affichageCase(typeT,k,0);
+        printf("\n");
+    }
+    printf("\n");
+    for(int k = 0;k<tailleCase;k++)
+    { 
+        affichageCase(typeT,k,1);
+        printf("\n");
+    }
+    printf("\n");
+    for(int k = 0;k<tailleCase;k++)
+    { 
+        affichageCase(typeT,k,2);
+        printf("\n");
+    }
+    printf("\n");
+    for(int k = 0;k<tailleCase;k++)
+    { 
+        affichageCase(typeT,k,3);
+        printf("\n");
+    }
+    printf("\n");
+    //printElement(tableauTuiles,typeTuile);
     // afficher les elements 
     return true;
 }
@@ -110,7 +133,7 @@ void affichageCase(const char fond[3][3],int k,int orientation)
                 printf("%c",fond[k][j]);
             }
             break;
-        case 1:
+        case 2:
             for(int j = 0;j<tailleCase;j++)
             {
             if(fond[j][k]==' ')
@@ -119,7 +142,7 @@ void affichageCase(const char fond[3][3],int k,int orientation)
                 printf("%c",fond[j][k]);
             }
             break;
-        case 2:
+        case 3:
             for(int j = 0;j<tailleCase;j++)
             {
             if(fond[2-k][j]==' ')
@@ -128,13 +151,13 @@ void affichageCase(const char fond[3][3],int k,int orientation)
                 printf("%c",fond[2-k][j]);
             }
             break;
-        case 3:
-            for(int j = 2;j<0;j--)
+        case 1:
+            for(int j = 0;j<tailleCase;j++)
             {
-            if(fond[j][k]==' ')
+            if(fond[2-j][k]==' ')
                 printf(" ");
             else
-                printf("%c",fond[j][k]);
+                printf("%c",fond[2-j][k]);
             }
             break;
     }
@@ -174,7 +197,6 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             if(checkImmobile==true)    // on regarde si la pièce est une pièce qui ne peut pas bouger
             {
                 // le test ci dessus est peut etre pas bon en fait
-                printf("Passage par les tuiles de base; i = %i ; j = %i\n",i,j); 
                 actuel.moove = false;
                 actuel.orientation = 0;         // si c'est le cas, on l'initialise comme tel 
                 switch (i)
@@ -305,3 +327,5 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
         }
     }
 }
+
+
