@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "playing.h"
 
 #define true 1
 #define false 0
@@ -243,9 +244,11 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         case 4: 
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 2;
+                            break;
                         case 6:
                             actuel.type = typeTuileEnL;
                             actuel.orientation = 3;
+                            break;
                         }
                         break;
                 }
