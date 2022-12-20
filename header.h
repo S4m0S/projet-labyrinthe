@@ -228,7 +228,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.orientation = 1;
                             break;
                         case 6:
-                            actuel.orientation = 0;
+                            actuel.orientation = 1;
                             break;
                         }
                         break;
