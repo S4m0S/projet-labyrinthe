@@ -91,10 +91,6 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
             }
             printf("\n");
         }
-        for(int j = 0;j<tailleLabyrinthe;j++)
-        {
-            printf("type : %i   ",tableauTuile[i][j].type);
-        }
         printf("\n\n");
     }
 }
@@ -189,7 +185,8 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.orientation = 1;
                             // pas de tresor mais depart d'un joueur ici 
                             break;
-                        case 2 || 4:
+                        case 2 :
+                        case 4 :
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 0;
                             // tresor !!!
@@ -205,7 +202,8 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         actuel.type = typeTuileEnT;
                         switch (j)
                         {
-                        case 0 || 2:
+                        case 0:
+                        case 2:
                             actuel.orientation = 3;
                             break;
                         case 4:
@@ -241,7 +239,8 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.type = typeTuileEnL;
                             actuel.orientation = 0;
                             break;
-                        case 2 || 4: 
+                        case 2:
+                        case 4: 
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 2;
                         case 6:
