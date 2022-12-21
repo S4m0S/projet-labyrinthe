@@ -444,11 +444,6 @@ void initialisationJouers(void){
                 J4.piece=pJ4;
                 J4.score=0;
                 //liste de tresor mais jsp comment faire
-
-
-
-
-                
             }
 
 }
