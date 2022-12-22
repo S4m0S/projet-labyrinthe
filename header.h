@@ -11,6 +11,7 @@
 #define typeTuileEnT 500
 #define typeTuileEnL 501
 #define typeTuileEnI 502
+#define nbTresor 24
 
 typedef char* string;
 typedef short int bool; 
@@ -47,15 +48,15 @@ typedef struct tuile{           // !! On doit trouver un moyen de voir où la pi
 
 
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3]);
-bool init(void);
+bool init(int nbJoueurs,string nomJoueurs[nbJoueurs]);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
 void affichageCase(const char fond[3][3],int k,int orientation);
-void initialisationJoueurs(void);
+void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs]);
 
 
 
 
-bool init(void)         // fonction d'initialisation du jeu une fois celle-ci effectuer on peut commencer a jouer 
+bool init(int nbJoueurs,string nomJoueurs[nbJoueurs])         // fonction d'initialisation du jeu une fois celle-ci effectuer on peut commencer a jouer 
 {                       // elle permet d'initialiser toutes les tuiles, de gerer le nombre de joueurs, la distrubution des cartes trésor...
     srand(time(NULL));
     const char typeT[tailleCase][tailleCase] = {{'#','#','#'},{' ',' ',' '},{'#',' ','#'}}; // type 0 : representation des pièces
@@ -68,6 +69,9 @@ bool init(void)         // fonction d'initialisation du jeu une fois celle-ci ef
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // tableau contenant le plateau de jeu avec toutes les tuiles
     initialisationTuiles(tableauTuiles);
     printElement(tableauTuiles,typeTuile);
+    // creation des joueurs 
+    joueur listeJoueurs[nbJoueurs];
+    initialisationJouers(nbJoueurs,nomJoueurs,listeJoueurs);
     // afficher les elements 
     return true;
 }
@@ -311,140 +315,30 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
     }
 }
 
-void initialisationJouers(void){
-    int nbJoueurs;
-    printf("saisir le nombre de joueurs, de 2 à 4:\n");//demande du nb de joueurs
-    scanf("%d",&nbJoueurs);
-    switch(nbJoueurs){
-        case 2 :
-                string nom;
-                printf("JOUEUR 1 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J1;
-                J1.nom = nom;
-                J1.affiche="♥";
-                position pJ1;
-                pJ1.x=0;
-                pJ1.y=0;
-                J1.piece=pJ1;
-                J1.score=0;
-                //liste de tresor mais jsp comment faire
+void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs]){
+    char listeRepresentation[4] = {'♥','♦','♣','♠'};
+    int listePosition[4][2]= {{0,0},{0,6},{6,0},{6,6}};
+    for(int i = 0;i<nbJoueurs;i++)
+    {
+        joueur actuel;
+        actuel.nom = nomJoueurs[i];
+        actuel.affiche = listeRepresentation[i];
+        actuel.score = 0;
+        position joueurActuel;
+        joueurActuel.x = listePosition[i][0];
+        joueurActuel.y = listePosition[i][1];
+        actuel.piece = joueurActuel;
+    }
+}
 
-                string nom;
-                printf("JOUEUR 2 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J2;
-                J2.nom = nom;
-                J2.affiche="♦";
-                position pJ2;
-                pJ2.x=0;
-                pJ2.y=6;
-                J2.piece=pJ2;
-                J2.score=0;
-                //liste de tresor mais jsp comment faire
-
-            case 3 :
-                string nom;
-                printf("JOUEUR 1 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J1;
-                J1.nom = nom;
-                J1.affiche="♥";
-                position pJ1;
-                pJ1.x=0;
-                pJ1.y=0;
-                J1.piece=pJ1;
-                J1.score=0;
-                //liste de tresor mais jsp comment faire
-
-                string nom;
-                printf("JOUEUR 2 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J2;
-                J2.nom = nom;
-                J2.affiche="♦";
-                position pJ2;
-                pJ2.x=0;
-                pJ2.y=6;
-                J2.piece=pJ2;
-                J2.score=0;
-                //liste de tresor mais jsp comment faire
-
-                string nom;
-                printf("JOUEUR 3 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J3;
-                J3.nom = nom;
-                J3.affiche="♣";
-                position pJ3;
-                pJ3.x=6;
-                pJ3.y=0;
-                J3.piece=pJ3;
-                J3.score=0;
-                //liste de tresor mais jsp comment faire
-
-            case 4 :
-                string nom;
-                printf("JOUEUR 1 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J1;
-                J1.nom = nom;
-                J1.affiche="♥";
-                position pJ1;
-                pJ1.x=0;
-                pJ1.y=0;
-                J1.piece=pJ1;
-                J1.score=0;
-                //liste de tresor mais jsp comment faire
-
-                string nom;
-                printf("JOUEUR 2 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J2;
-                J2.nom = nom;
-                J2.affiche="♦";
-                position pJ2;
-                pJ2.x=0;
-                pJ2.y=6;
-                J2.piece=pJ2;
-                J2.score=0;
-                //liste de tresor mais jsp comment faire
-
-                string nom;
-                printf("JOUEUR 3 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J3;
-                J3.nom = nom;
-                J3.affiche="♣";
-                position pJ3;
-                pJ3.x=6;
-                pJ3.y=0;
-                J3.piece=pJ3;
-                J3.score=0;
-                //liste de tresor mais jsp comment faire
-
-                string nom;
-                printf("JOUEUR 4 :\n");
-                printf("saisir un nom:\n");
-                fgets(nom,100,stdin);
-                joueur J4;
-                J4.nom = nom;
-                J4.affiche="♠";
-                position pJ4;
-                pJ4.x=6;
-                pJ4.y=6;
-                J4.piece=pJ4;
-                J4.score=0;
-                //liste de tresor mais jsp comment faire
-            }
-
+void initialisationTresor(tresor listeJoueur[])
+{
+    char listeRepresentation[nbTresor] = {'*','^','$','£','¤','µ','%','ù','¨','!','§',':','/','.',';','?',',','+','=','@','ç'};
+    for(int i = 0;i<nbTresor;i++)
+    {
+        tresor actuelle;
+        actuelle.affiche = listeRepresentation[i];
+        actuelle.find = false;
+    }   
 }
 
