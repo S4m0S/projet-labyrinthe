@@ -226,11 +226,9 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.orientation = 1;
                             break;
                         }
-                        {
                         tresor nouveau;
                         initTresor(&indexTresor,nouveau,&actuel.posActuelle);
                         actuel.treasure = nouveau;
-                        }
                         break;
                     case 4 :
                         actuel.type = typeTuileEnT;
@@ -249,11 +247,9 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.orientation = 1;
                             break;
                         }
-                        {
-                        tresor nouveau;
+                        //tresor nouveau;
                         initTresor(&indexTresor,nouveau,&actuel.posActuelle);
                         actuel.treasure = nouveau;
-                        }
                         break;
                     case 6 : 
                         switch (j)
@@ -340,14 +336,14 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
     }
 }
 
-void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs]){
+void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[]){
     char listeRepresentation[4] = {'♥','♦','♣','♠'};
     int listePosition[4][2]= {{0,0},{0,6},{6,0},{6,6}};
     for(int i = 0;i<nbJoueurs;i++)
     {
         joueur actuel;
         actuel.nom = nomJoueurs[i];
-        actuel.affiche = listeRepresentation[i];
+        actuel.affiche = listePionJoueurs[i];
         actuel.score = 0;
         position joueurActuel;
         joueurActuel.x = listePosition[i][0];
