@@ -226,9 +226,11 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.orientation = 1;
                             break;
                         }
+                        {
                         tresor nouveau;
                         initTresor(&indexTresor,nouveau,&actuel.posActuelle);
                         actuel.treasure = nouveau;
+                        }
                         break;
                     case 4 :
                         actuel.type = typeTuileEnT;
@@ -247,9 +249,11 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.orientation = 1;
                             break;
                         }
-                        //tresor nouveau;
+                        {
+                        tresor nouveau;
                         initTresor(&indexTresor,nouveau,&actuel.posActuelle);
                         actuel.treasure = nouveau;
+                        }
                         break;
                     case 6 : 
                         switch (j)
