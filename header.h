@@ -339,6 +339,35 @@ void initialisationTresor(tresor listeJoueur[])
         tresor actuelle;
         actuelle.affiche = listeRepresentation[i];
         actuelle.find = false;
+        //!!position
     }   
 }
 
+void attributionTresors(){
+    
+}
+
+
+void menu(int choix){//soit on fait la declaration du choix ici
+    int choix;//soit on déclare ici
+    do{
+    printf("1. Nouvelle partie\n 2.Sauvegarder la partie\n 3. Charger une partie 4.Credits/Regles du jeu\n 5.Quitter\n");
+    scanf("%d",&choix);}
+    while(choix<1&&choix>5);
+    switch(choix){
+        case 1:
+            //lance une nouvelle partie
+    
+        case 2:
+            //On sauvegarde
+
+        case 3:
+            //On charge une partie
+
+        case 4:
+            //Afficher credit et regles
+
+        case 5:
+            //on quitte
+    }
+}
