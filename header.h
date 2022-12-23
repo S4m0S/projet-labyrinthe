@@ -358,6 +358,7 @@ void initTresor(int* indexTresor,tresor actuel,position* posPiece)
     actuel.affiche = listeRepresentation[*indexTresor];
     actuel.find = false;
     actuel.piece = posPiece;
+    *indexTresor++;
 }
 
 void attributionTresors(){
