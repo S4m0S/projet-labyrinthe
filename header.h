@@ -52,7 +52,7 @@ bool init(int nbJoueurs,string nomJoueurs[nbJoueurs]);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
 void affichageCase(const char fond[3][3],int k,int orientation);
 void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs]);
-
+void initTresor(int* indexTresor,tresor actuel,position* posPiece);
 
 
 
@@ -160,7 +160,8 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
     int typeTuileAleatoire;             // Vairable pour faire un choix entre les 4 variables ci-dessus
     bool possible;                      // check si la pièce aleatoire est bien disponible 
     int checkValue[4] = {0,2,4,6};      // valeur pour lesquels le tes pièces seront immobiles
-    bool checkImmobile;
+    bool checkImmobile;                 // si true la piece est immobile 
+    int indexTresor = 0;                // index de la representation des tresor
     for(int i = 0;i<tailleLabyrinthe;i++)
     {
         for(int j = 0;j<tailleLabyrinthe;j++)
@@ -168,6 +169,10 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             
             tuile actuel;           // initialisationd de la tuile actuelle, celle-ci sera ensuite inserer dans le tableau
             checkImmobile = false;
+            position posActuel;
+            posActuel.x = i;
+            posActuel.y = j;
+            actuel.posActuelle = posActuel;
             for(int p = 0;p<4;p++)
             {
                 for(int m = 0;m<4;m++)
@@ -195,12 +200,14 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         case 4 :
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 0;
-                            // tresor !!!
+                            tresor nouveau;
+                            initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                            actuel.treasure = nouveau;
                             break;
                         case 6:
                             actuel.type = typeTuileEnL;
                             actuel.orientation = 2;
-                            // tresor !!
+                            // depart de joueurs
                             break;
                         }
                         break;
@@ -219,6 +226,9 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.orientation = 1;
                             break;
                         }
+                        tresor nouveau;
+                        initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                        actuel.treasure = nouveau;
                         break;
                     case 4 :
                         actuel.type = typeTuileEnT;
@@ -237,6 +247,9 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.orientation = 1;
                             break;
                         }
+                        //tresor nouveau;
+                        initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                        actuel.treasure = nouveau;
                         break;
                     case 6 : 
                         switch (j)
@@ -244,15 +257,20 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         case 0:
                             actuel.type = typeTuileEnL;
                             actuel.orientation = 0;
+                            //depart joueurs
                             break;
                         case 2:
                         case 4: 
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 2;
+                            tresor nouveau;
+                            initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                            actuel.treasure = nouveau;
                             break;
                         case 6:
                             actuel.type = typeTuileEnL;
                             actuel.orientation = 3;
+                            //depart joueurs
                             break;
                         }
                         break;
@@ -274,6 +292,9 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         {
                             possible = true;
                             actuel.type = typeTuileEnT;
+                            tresor nouveau;
+                            initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                            actuel.treasure = nouveau;
                             tuileTnombreAvecTresor--;
                         }
                         break;
@@ -282,6 +303,9 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                         {
                             possible =true;
                             actuel.type = typeTuileEnL;
+                            tresor nouveau;
+                            initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                            actuel.treasure = nouveau;
                             tuileLnombreAvecTresor--;
                             // tresor !!
                         }
@@ -306,10 +330,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                 }while(possible!=true);
                 
             }
-            position posActuel;
-            posActuel.x = i;
-            posActuel.y = j;
-            actuel.posActuelle = posActuel;
+            
             tableauTuile[i][j] = actuel;
         }
     }
@@ -331,16 +352,12 @@ void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur lis
     }
 }
 
-void initialisationTresor(tresor listeJoueur[])
+void initTresor(int* indexTresor,tresor actuel,position* posPiece)
 {
     char listeRepresentation[nbTresor] = {'*','^','$','£','¤','µ','%','ù','¨','!','§',':','/','.',';','?',',','+','=','@','ç'};
-    for(int i = 0;i<nbTresor;i++)
-    {
-        tresor actuelle;
-        actuelle.affiche = listeRepresentation[i];
-        actuelle.find = false;
-        //!!position
-    }   
+    actuel.affiche = listeRepresentation[*indexTresor];
+    actuel.find = false;
+    actuel.piece = posPiece;
 }
 
 void attributionTresors(){
