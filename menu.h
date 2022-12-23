@@ -35,10 +35,16 @@ void DemarrageMenu(char listeNomsJoueurs[],joueur listeJoueurs[],char listePionJ
         scanf("%d",&nbPion);
         switch(nbPion){
             case 1:
-                
-        }    
+                listePionJoueurs[i]=listeRepresentation[0];
+            case 2:
+                listePionJoueurs[i]=listeRepresentation[1];
+            case 3:
+                listePionJoueurs[i]=listeRepresentation[2];
+            case 4:
+                listePionJoueurs[i]=listeRepresentation[3];
+        }
+        //pour la couleur vu qu'on la pas mis dans la structure joueur jsp    
 
     }
-
-
+    initialisationJouers(nbJoueurs,listeNomsJoueurs,listeJoueurs,listePionJoueurs);
 }
