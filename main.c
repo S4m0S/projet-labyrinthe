@@ -1,4 +1,5 @@
 #include "header.h"
+#include "menu.h"
 int main(int argc, char *argv[])
 {
     if(argc==1)
