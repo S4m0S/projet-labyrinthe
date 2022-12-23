@@ -5,9 +5,11 @@
 void menuInitial(){//soit on fait la declaration du choix ici
     int choix;//soit on déclare ici
     do{
+    system("cls");
     printf("1. Nouvelle partie\n 2.Credits/Regles du jeu\n 3.Quitter\n");
     scanf("%d",&choix);}
     while(choix<1&&choix>3);
+    system("cls");
     switch(choix){
         case 1:
             //lance une nouvelle partie
@@ -25,9 +27,11 @@ void DemarrageMenu(char listeNomsJoueurs[],joueur listeJoueurs[],char listePionJ
     int nbJoueurs;
     char nom[50];
     int nbPion;
+    system("cls");
     printf("saisir le nombre de joueurs:\n");
     scanf("%d",&nbJoueurs);
     for(int i=0;i<nbJoueurs;i++){
+        system("cls");
         printf("donner le nom du joueur %d",i);
         fgets(nom,50,stdin);
         listeNomsJoueurs[i]=*nom;
