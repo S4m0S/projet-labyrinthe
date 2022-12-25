@@ -12,7 +12,10 @@ void menuInitial(){//soit on fait la declaration du choix ici
     system("cls");
     switch(choix){
         case 1:
-            //lance une nouvelle partie
+            char listeNomsJoueurs[], listePionsJoueurs[];
+            joueur listeJoueurs;
+            DemarrageMenu(listeNomsJoueurs,listeJoueurs,listePionsJoueurs);
+            //EnJeux();
     
         case 2:
             printf("Regles du jeu:\nLe Labyrinthe est un jeu de plateau comprenant 2 a 4 joueurs. Chaque joueur possède une liste de tresors
