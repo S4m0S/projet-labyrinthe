@@ -361,5 +361,17 @@ void initTresor(int* indexTresor,tresor actuel,position* posPiece)
     *indexTresor++;
 }
 
+void repartitionTresors(int nbJoueurs,joueur listeJoueurs[]){//jespere ca marche ca
+    char listeRepresentation[nbTresor] = {'*','^','$','£','¤','µ','%','ù','¨','!','§',':','/','.',';','?',',','+','=','@','ç'};
+    for (int i=0;i<24/nbJoueurs;i++){
+        for(int j=0;j<nbJoueurs;j++){
+            int rand=0;
+            do{
+            rand=rand()%24;}
+            while(listeRepresentation[rand]=='0');
+            listeTresor.listeJoueurs[j]=listeRepresentation[rand];
+            listeRepresentation[rand]='0';
 
+    }}
+}
 
