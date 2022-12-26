@@ -50,9 +50,10 @@ typedef struct tuile{           // !! On doit trouver un moyen de voir où la pi
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3]);
 bool init(int nbJoueurs,string nomJoueurs[nbJoueurs]);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
-void affichageCase(const char fond[3][3],int k,int orientation);
-void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs]);
-void initTresor(int* indexTresor,tresor actuel,position* posPiece);
+void affichageCase(const char fond[3][3],int k,tuile actuelle);
+void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[]);
+void initTresor(int* indexTresor,tresor* actuel,position* posPiece);
+
 
 
 
@@ -71,7 +72,8 @@ bool init(int nbJoueurs,string nomJoueurs[nbJoueurs])         // fonction d'init
     printElement(tableauTuiles,typeTuile);
     // creation des joueurs 
     joueur listeJoueurs[nbJoueurs];
-    initialisationJouers(nbJoueurs,nomJoueurs,listeJoueurs);
+    char listeTest[] = {'o','j','m','t'};
+    initialisationJouers(nbJoueurs,nomJoueurs,listeJoueurs,listeTest);
     // afficher les elements 
     return true;
 }
@@ -89,11 +91,11 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
                 // gerer l'orientation ici 
                 // suite dans la fonction affichage case 
                 if(tableauTuile[i][j].type == typeTuileEnT)
-                    affichageCase(typeTuile[0],k,tableauTuile[i][j].orientation);
+                    affichageCase(typeTuile[0],k,tableauTuile[i][j]);
                 else if(tableauTuile[i][j].type == typeTuileEnL)
-                    affichageCase(typeTuile[1],k,tableauTuile[i][j].orientation);
+                    affichageCase(typeTuile[1],k,tableauTuile[i][j]);
                 else
-                    affichageCase(typeTuile[2],k,tableauTuile[i][j].orientation);
+                    affichageCase(typeTuile[2],k,tableauTuile[i][j]);
             }
             printf("\n");
         }
@@ -101,15 +103,17 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
     }
 }
 
-void affichageCase(const char fond[3][3],int k,int orientation)
+void affichageCase(const char fond[3][3],int k,tuile actuelle)
 {
     // Verifier l'affichage en fonction de l'orientation because c'est bizzare la actuellement
-    switch (orientation)
+    switch (actuelle.orientation)
     {
         case 0:
             for(int j = 0;j<tailleCase;j++)
             {
-            if(fond[k][j]==' ')
+            if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
+                printf("%c",actuelle.treasure.affiche);
+            else if(fond[k][j]==' ')
                 printf(" ");
             else
                 printf("%c",fond[k][j]);
@@ -118,7 +122,9 @@ void affichageCase(const char fond[3][3],int k,int orientation)
         case 1:
             for(int j = 0;j<tailleCase;j++)
             {
-            if(fond[2-j][k]==' ')
+            if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
+                printf("%c",actuelle.treasure.affiche);
+            else if(fond[2-j][k]==' ')
                 printf(" ");
             else
                 printf("%c",fond[2-j][k]);
@@ -127,7 +133,9 @@ void affichageCase(const char fond[3][3],int k,int orientation)
         case 2:
             for(int j = 0;j<tailleCase;j++)
             {
-            if(fond[2-k][2-j]==' ')
+            if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
+                printf("%c",actuelle.treasure.affiche);
+            else if(fond[2-k][2-j]==' ')
                 printf(" ");
             else
                 printf("%c",fond[2-k][2-j]);
@@ -136,7 +144,9 @@ void affichageCase(const char fond[3][3],int k,int orientation)
         case 3:
             for(int j = 0;j<tailleCase;j++)
             {
-            if(fond[j][2-k]==' ')
+            if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
+                printf("%c",actuelle.treasure.affiche);
+            else if(fond[j][2-k]==' ')
                 printf(" ");
             else
                 printf("%c",fond[j][2-k]);
@@ -173,6 +183,11 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             posActuel.x = i;
             posActuel.y = j;
             actuel.posActuelle = posActuel;
+            {
+                tresor pasDeTresor;
+                pasDeTresor.piece = NULL;
+                actuel.treasure = pasDeTresor;
+            }
             for(int p = 0;p<4;p++)
             {
                 for(int m = 0;m<4;m++)
@@ -201,7 +216,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 0;
                             tresor nouveau;
-                            initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
                             actuel.treasure = nouveau;
                             break;
                         case 6:
@@ -227,7 +242,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             break;
                         }
                         tresor nouveau;
-                        initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                        initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
                         actuel.treasure = nouveau;
                         break;
                     case 4 :
@@ -248,7 +263,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             break;
                         }
                         //tresor nouveau;
-                        initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                        initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
                         actuel.treasure = nouveau;
                         break;
                     case 6 : 
@@ -264,7 +279,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 2;
                             tresor nouveau;
-                            initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
                             actuel.treasure = nouveau;
                             break;
                         case 6:
@@ -293,7 +308,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             possible = true;
                             actuel.type = typeTuileEnT;
                             tresor nouveau;
-                            initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
                             actuel.treasure = nouveau;
                             tuileTnombreAvecTresor--;
                         }
@@ -304,7 +319,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             possible =true;
                             actuel.type = typeTuileEnL;
                             tresor nouveau;
-                            initTresor(&indexTresor,nouveau,&actuel.posActuelle);
+                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
                             actuel.treasure = nouveau;
                             tuileLnombreAvecTresor--;
                             // tresor !!
@@ -352,26 +367,29 @@ void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur lis
     }
 }
 
-void initTresor(int* indexTresor,tresor actuel,position* posPiece)
+void initTresor(int* indexTresor,tresor* actuel,position* posPiece)
 {
-    char listeRepresentation[nbTresor] = {'*','^','$','£','¤','µ','%','ù','¨','!','§',':','/','.',';','?',',','+','=','@','ç'};
-    actuel.affiche = listeRepresentation[*indexTresor];
-    actuel.find = false;
-    actuel.piece = posPiece;
-    *indexTresor++;
+    char listeRepresentation[nbTresor] = {'1','2','3','4','5','6','7','8','9','0','A','Z','E','R','T','Y','U','I','O','P','Q','S','D','F','G','H'};
+    actuel->affiche = listeRepresentation[*indexTresor];
+    actuel->find = false;
+    actuel->piece = posPiece;
+    *indexTresor+=1;
 }
 
+/*
 void repartitionTresors(int nbJoueurs,joueur listeJoueurs[]){//jespere ca marche ca
     char listeRepresentation[nbTresor] = {'*','^','$','£','¤','µ','%','ù','¨','!','§',':','/','.',';','?',',','+','=','@','ç'};
     for (int i=0;i<24/nbJoueurs;i++){
         for(int j=0;j<nbJoueurs;j++){
-            int rand=0;
+            int random=0;
             do{
-            rand=rand()%24;}
-            while(listeRepresentation[rand]=='0');
-            listeTresor.listeJoueurs[j]=listeRepresentation[rand];
-            listeRepresentation[rand]='0';
+            random=rand()%24;}
+            while(listeRepresentation[random]=='0');
+            listeTresor.listeJoueurs[j]=listeRepresentation[random];    // cet ligne bug et je comprend pas ce que veut dire le listeTresor.list...
+            listeRepresentation[random]='0';
 
     }}
 }
+*/
+
 
