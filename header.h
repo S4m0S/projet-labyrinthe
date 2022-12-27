@@ -385,8 +385,8 @@ void repartitionTresors(int nbJoueurs,joueur listeJoueurs[]){//jespere ca marche
             do{
             random=rand()%24;}
             while(listeRepresentation[random]=='0');
-            listeTresor.listeJoueurs[j]=listeRepresentation[random];    // cet ligne bug et je comprend pas ce que veut dire le listeTresor.list...// c'est la liste des tresors de chaque joueur, mais ouai jpense on peut pas ecrire ca comme ca
-            listeRepresentation[random]='0';
+            listeTresor.listeJoueurs[j]=listeRepresentation[random];    // cet ligne bug et je comprend pas ce que veut dire le listeTresor.list...
+            listeRepresentation[random]='0';                            // apres reflexion tu me vois dans le regret de t'annoncer que ca marche pas 
 
     }}
 }
