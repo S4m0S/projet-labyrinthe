@@ -427,3 +427,8 @@ void impressionJoueur(tuile presente)
 {
     return;
 }
+
+void deplacement(tuile integrer,position oumettre,tuile listePlato[7][7])
+{
+    return;
+}
