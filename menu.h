@@ -21,9 +21,9 @@ void menuInitial(){//soit on fait la declaration du choix ici
             break;
         case 2:
             {
-            printf("Regles du jeu:\nLe Labyrinthe est un jeu de plateau comprenant 2 a 4 joueurs. Chaque joueur possède une liste de tresors
-            qu'il doit aller chercher dans un labyrinthe de 49 tuiles. Pour cela, chacun leur tour, les joueurs ont la possibilite de deplacer 
-            une rangee de tuiles et de placer une tuile au bout de cette rangee. Le joueur peut faire pivoter cette tuile. Enfin, le joueur peut 
+            printf("Regles du jeu:\nLe Labyrinthe est un jeu de plateau comprenant 2 a 4 joueurs.\n Chaque joueur possède une liste de tresors
+            qu'il doit aller chercher dans un labyrinthe de 49 tuiles.\n Pour cela, chacun leur tour, les joueurs ont la possibilite de deplacer 
+            une rangee de tuiles et de placer une tuile au bout de cette rangee.\n Le joueur peut faire pivoter cette tuile. Enfin, le joueur peut 
             deplacer son pion d'autant de case qu' il veut,tant qu' il suit un chemin. Le premier joueur qui recupere tout ses tresors gagne la partie.\
             Credits: Adda Michael - El Haj Jean - Hogommat Julien - Nasreddine Adam\n");
             }       
