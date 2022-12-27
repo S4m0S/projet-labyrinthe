@@ -39,6 +39,7 @@ typedef struct joueur {
 }joueur;
 
 typedef struct tuile{           // !! On doit trouver un moyen de voir où la pièce est "ouverte", c'est a dire si le joueur peut passer ou si il y a un mur 
+    joueur * presenceJoueur;           // si NULL alors pas de joueurs 
     int type;
     position posActuelle;
     tresor treasure;
@@ -51,7 +52,7 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
 bool init(int nbJoueurs,string nomJoueurs[nbJoueurs]);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
 void affichageCase(const char fond[3][3],int k,tuile actuelle);
-void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[]);
+void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[],tuile listePlateau[tailleLabyrinthe][tailleLabyrinthe]);
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece);
 
 
@@ -69,12 +70,30 @@ bool init(int nbJoueurs,string nomJoueurs[nbJoueurs])         // fonction d'init
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // tableau contenant le plateau de jeu avec toutes les tuiles
     initialisationTuiles(tableauTuiles);
-    printElement(tableauTuiles,typeTuile);
+    
     // creation des joueurs 
     joueur listeJoueurs[nbJoueurs];
-    char listeTest[] = {'o','j','m','t'};
-    initialisationJouers(nbJoueurs,nomJoueurs,listeJoueurs,listeTest);
+    char listeTest[] = {'w','x','c','v'};
+    bool test = true;
+    for(int i = 0;i<tailleLabyrinthe;i++)
+    {
+        for(int j = 0;j<tailleLabyrinthe;j++)
+        {
+            if(tableauTuiles[i][j].presenceJoueur!=NULL)
+            {
+                test = false;
+            }
+
+        }
+    }
+    printf("%i\n",test);
+    printElement(tableauTuiles,typeTuile);
+    initialisationJoueurs(nbJoueurs,nomJoueurs,listeJoueurs,listeTest,tableauTuiles);
     // afficher les elements 
+    //printf("%c\n",tableauTuiles[0][3].presenceJoueur->affiche);
+
+
+    
     return true;
 }
 
@@ -82,6 +101,7 @@ bool init(int nbJoueurs,string nomJoueurs[nbJoueurs])         // fonction d'init
 //  fonction de test 
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3])
 {   
+    
     for(int i = 0 ; i<tailleLabyrinthe;i++)
     {
         for(int k =0;k<tailleCase;k++)
@@ -113,6 +133,8 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
             {
             if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
                 printf("%c",actuelle.treasure.affiche);
+            else if(k==1 && j==1 && actuelle.presenceJoueur != NULL)
+                printf("%c",actuelle.presenceJoueur->affiche);
             else if(fond[k][j]==' ')
                 printf(" ");
             else
@@ -124,6 +146,8 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
             {
             if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
                 printf("%c",actuelle.treasure.affiche);
+            else if(k==1 && j==1 && actuelle.presenceJoueur != NULL)
+                printf("%c",actuelle.presenceJoueur->affiche);
             else if(fond[2-j][k]==' ')
                 printf(" ");
             else
@@ -135,6 +159,8 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
             {
             if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
                 printf("%c",actuelle.treasure.affiche);
+            else if(k==1 && j==1 && actuelle.presenceJoueur != NULL)
+                printf("%c",actuelle.presenceJoueur->affiche);
             else if(fond[2-k][2-j]==' ')
                 printf(" ");
             else
@@ -146,6 +172,8 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
             {
             if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
                 printf("%c",actuelle.treasure.affiche);
+            else if(k==1 && j==1 && actuelle.presenceJoueur != NULL)
+                printf("%c",actuelle.presenceJoueur->affiche);
             else if(fond[j][2-k]==' ')
                 printf(" ");
             else
@@ -178,6 +206,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
         {
             
             tuile actuel;           // initialisationd de la tuile actuelle, celle-ci sera ensuite inserer dans le tableau
+            actuel.presenceJoueur = NULL;
             checkImmobile = false;
             position posActuel;
             posActuel.x = i;
@@ -351,25 +380,27 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
     }
 }
 
-void initialisationJouers(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[]){
-    char listeRepresentation[4] = {'♥','♦','♣','♠'};
+void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[],tuile listePlateau[tailleLabyrinthe][tailleLabyrinthe]){
+    //char listeRepresentation[4] = {'♥','♦','♣','♠'};
+    char listeRepresentation[4] = {'w','x','c','v'};
     int listePosition[4][2]= {{0,0},{0,6},{6,0},{6,6}};
     for(int i = 0;i<nbJoueurs;i++)
     {
         joueur actuel;
         actuel.nom = nomJoueurs[i];
-        actuel.affiche = listePionJoueurs[i];
+        actuel.affiche = listeRepresentation[i];
         actuel.score = 0;
         position joueurActuel;
         joueurActuel.x = listePosition[i][0];
         joueurActuel.y = listePosition[i][1];
         actuel.piece = joueurActuel;
+        listePlateau[listePosition[i][0]][listePosition[i][1]].presenceJoueur = &actuel;
     }
 }
 
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece)
 {
-    char listeRepresentation[nbTresor] = {'1','2','3','4','5','6','7','8','9','0','A','Z','E','R','T','Y','U','I','O','P','Q','S','D','F','G','H'};
+    char listeRepresentation[nbTresor] = {'1','2','3','4','5','6','7','8','9','0','A','Z','E','R','T','Y','U','I','O','P','Q','S','D','F'};
     actuel->affiche = listeRepresentation[*indexTresor];
     actuel->find = false;
     actuel->piece = posPiece;
@@ -392,4 +423,7 @@ void repartitionTresors(int nbJoueurs,joueur listeJoueurs[]){//jespere ca marche
 }
 */
 
-
+void impressionJoueur(tuile presente)
+{
+    return;
+}
