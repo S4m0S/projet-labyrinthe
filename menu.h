@@ -4,6 +4,8 @@
 
 void menuInitial(){//soit on fait la declaration du choix ici
     int choix;//soit on déclare ici
+    bool running = true;
+    do{
     do{
     system("cls");
     printf("1. Nouvelle partie\n 2.Credits/Regles du jeu\n 3.Quitter\n");
@@ -27,9 +29,11 @@ void menuInitial(){//soit on fait la declaration du choix ici
             }       
             break;
         case 3:
+            running = false;
             break;
             //jsp trop quoi mettre 
     }
+    }while(running==true);
 }
 
 void DemarrageMenu(char listeNomsJoueurs[],joueur listeJoueurs[],char listePionJoueurs[]){
