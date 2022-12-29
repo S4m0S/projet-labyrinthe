@@ -19,10 +19,10 @@ void menuInitial(){//soit on fait la declaration du choix ici
             break;
         case 2:
             {
-            printf("Regles du jeu:\nLe Labyrinthe est un jeu de plateau comprenant 2 a 4 joueurs. Chaque joueur possède une liste de tresors
-            qu'il doit aller chercher dans un labyrinthe de 49 tuiles. Pour cela, chacun leur tour, les joueurs ont la possibilite de deplacer 
-            une rangee de tuiles et de placer une tuile au bout de cette rangee. Le joueur peut faire pivoter cette tuile. Enfin, le joueur peut 
-            deplacer son pion d'autant de case qu' il veut,tant qu' il suit un chemin. Le premier joueur qui recupere tout ses tresors gagne la partie.\
+            printf("Regles du jeu:\nLe Labyrinthe est un jeu de plateau comprenant 2 a 4 joueurs.\nChaque joueur possède une liste de tresors
+            qu'il doit aller chercher dans un labyrinthe de 49 tuiles.\n Pour cela, chacun leur tour, les joueurs ont la possibilite de deplacer 
+            une rangee de tuiles et de placer une tuile au bout de cette rangee.\n Le joueur peut faire pivoter cette tuile. Enfin, le joueur peut 
+            deplacer son pion d'autant de case qu' il veut,tant qu' il suit un chemin.\n Le premier joueur qui recupere tout ses tresors gagne la partie.\n
             Credits: Adda Michael - El Haj Jean - Hogommat Julien - Nasreddine Adam\n");
             }       
             break;
@@ -67,3 +67,15 @@ void DemarrageMenu(char listeNomsJoueurs[],joueur listeJoueurs[],char listePionJ
     }
     initialisationJouers(nbJoueurs,listeNomsJoueurs,listeJoueurs,listePionJoueurs);
 }
+
+bool ReperageQuit(){
+    string renvoi;
+    printf("presser q pour quitter:");
+    fgets(renvoi,100,stdin);
+    if (renvoi=='q'||renvoi=='Q'){
+        return false;
+    }
+    else{
+        return true;
+    }
+}//on le met au debut de chaque tour et si cest vrai on lance sinon on arrete
