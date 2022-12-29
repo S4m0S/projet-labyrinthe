@@ -27,7 +27,6 @@ typedef struct tresor{
     position* piece;        // addresse de la position de la pièce sur laquelle se trouve le tresor
     bool find;              // le tresor a-t-il déja eté trouvé
     char affiche;           
-
 }tresor;
 
 typedef struct joueur {
@@ -87,10 +86,15 @@ bool init(int nbJoueurs,string nomJoueurs[nbJoueurs])         // fonction d'init
         }
     }
     printf("%i\n",test);
-    printElement(tableauTuiles,typeTuile);
     initialisationJoueurs(nbJoueurs,nomJoueurs,listeJoueurs,listeTest,tableauTuiles);
+    printf("%s\n",tableauTuiles[0][0].presenceJoueur->nom);
+    printf("%s\n",tableauTuiles[0][6].presenceJoueur->nom);
+    printf("%s\n",tableauTuiles[6][6].presenceJoueur->nom);
+    printf("%s\n",tableauTuiles[6][0].presenceJoueur->nom);
+    printf("%i\n",test);
+    //printElement(tableauTuiles,typeTuile);
+    
     // afficher les elements 
-    //printf("%c\n",tableauTuiles[0][3].presenceJoueur->affiche);
 
 
     
@@ -384,17 +388,19 @@ void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur li
     //char listeRepresentation[4] = {'♥','♦','♣','♠'};
     char listeRepresentation[4] = {'w','x','c','v'};
     int listePosition[4][2]= {{0,0},{0,6},{6,0},{6,6}};
+    //joueur *listePointerJoueurs = calloc(4,sizeof(joueur)); // !!!!!! free ca faire un max de valgrind pour bien check 0 leaks
     for(int i = 0;i<nbJoueurs;i++)
     {
-        joueur actuel;
-        actuel.nom = nomJoueurs[i];
-        actuel.affiche = listeRepresentation[i];
-        actuel.score = 0;
+        joueur* actuel = listePionJoueurs[i];
+        actuel->nom = nomJoueurs[i];
+        actuel->affiche = listeRepresentation[i];
+        actuel->score = 0;
         position joueurActuel;
         joueurActuel.x = listePosition[i][0];
         joueurActuel.y = listePosition[i][1];
-        actuel.piece = joueurActuel;
-        listePlateau[listePosition[i][0]][listePosition[i][1]].presenceJoueur = &actuel;
+        actuel->piece = joueurActuel;
+        printf("%s",actuel->nom);
+        listePlateau[listePosition[i][0]][listePosition[i][1]].presenceJoueur = actuel;
     }
 }
 
