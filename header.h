@@ -438,3 +438,18 @@ void deplacement(tuile integrer,position oumettre,tuile listePlato[7][7])
 {
     return;
 }
+
+bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition)
+{
+    if(nouvellePosition.x == anciennePosition->x-6 || nouvellePosition.x == anciennePosition->x+6 || nouvellePosition.y == anciennePosition->y-6 || nouvellePosition.y == anciennePosition->y+6)
+        return false;
+    else{
+        *anciennePosition = nouvellePosition;
+        tuile* quiSaute = nouvellePosition.x==0 ? &listePlato[6][nouvellePosition.y]:(nouvellePosition.x==6 ? &listePlato[0][nouvellePosition.y]:(nouvellePosition.y==0 ? &listePlato[nouvellePosition.x][6]:&listePlato[nouvellePosition.x][0]));// test pour savoir quelle est la tuille qui saute
+        int i = quiSaute->posActuelle.x==0 ? 0:(quiSaute->posActuelle.x==6 ? 6:quiSaute->posActuelle.x); 
+        for(i = 0; i < tailleLabyrinthe;i++)
+        {
+
+        }
+    }
+}
