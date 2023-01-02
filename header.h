@@ -453,3 +453,8 @@ bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
         }
     }
 }
+
+
+bool bougerJoueur(joueur Joueur, position nouvellePos, tuile listePlato[7][7],position anciennePos){
+    
+}
