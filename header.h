@@ -437,5 +437,26 @@ bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
 
 
 bool bougerJoueur(joueur Joueur, position nouvellePos, tuile listePlato[7][7],position anciennePos){
-    
+    char[3][3] nouvelleCase, ancienneCase;
+    affichageCase(nouvelleCase,listePlato[x.nouvellePos][y.nouvellePos]);
+    affichageCase(ancienneCase,listePlato[x.anciennePos][y.anciennePos]);
+    if(x.anciennePos-1>=0&&x.nouvellePos==x.anciennePos-1&&y.nouvellePos==y.anciennePos){
+        if( nouvelleCase[2][1]!=#&&ancienneCase[0][1]!=#){
+            x.posJoueur.Joueur=x.anciennePos-1;}
+    }
+    if(x.anciennePos+1<=7&&x.nouvellePos==x.anciennePos+1&&y.nouvellePos==y.anciennePos){
+        if(nouvelleCase[0][1]!=#&&ancienneCase[2][1]!=#){
+            x.posJoueur.Joueur=x.anciennePos+1;}
+    }
+    if(y.anciennePos-1>=0&&y.nouvellePos==y.anciennePos-1&&x.nouvellePos==x.anciennePos){
+        if(nouvelleCase[1][0]!=#&&ancienneCase[1][2]!=#){
+            y.posJoueur.Joueur=y.anciennePos-1;}
+    }
+    if(y.anciennePos+1>=7&&y.nouvellePos==y.anciennePos+1&&x.nouvellePos==x.anciennePos){
+        if(nouvelleCase[1][2]!=#&&ancienneCase[1][0]!=#){
+            y.posJoueur.Joueur=y.anciennePos-1;}
+    }
+
+
+
 }
