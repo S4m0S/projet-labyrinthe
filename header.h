@@ -73,26 +73,8 @@ bool init(int nbJoueurs,string nomJoueurs[nbJoueurs])         // fonction d'init
     // creation des joueurs 
     joueur listeJoueurs[nbJoueurs];
     char listeTest[] = {'w','x','c','v'};
-    bool test = true;
-    for(int i = 0;i<tailleLabyrinthe;i++)
-    {
-        for(int j = 0;j<tailleLabyrinthe;j++)
-        {
-            if(tableauTuiles[i][j].presenceJoueur!=NULL)
-            {
-                test = false;
-            }
-
-        }
-    }
-    printf("%i\n",test);
     initialisationJoueurs(nbJoueurs,nomJoueurs,listeJoueurs,listeTest,tableauTuiles);
-    printf("%s\n",tableauTuiles[0][0].presenceJoueur->nom);
-    printf("%s\n",tableauTuiles[0][6].presenceJoueur->nom);
-    printf("%s\n",tableauTuiles[6][6].presenceJoueur->nom);
-    printf("%s\n",tableauTuiles[6][0].presenceJoueur->nom);
-    printf("%i\n",test);
-    //printElement(tableauTuiles,typeTuile);
+    printElement(tableauTuiles,typeTuile);
     
     // afficher les elements 
 
@@ -388,10 +370,10 @@ void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur li
     //char listeRepresentation[4] = {'♥','♦','♣','♠'};
     char listeRepresentation[4] = {'w','x','c','v'};
     int listePosition[4][2]= {{0,0},{0,6},{6,0},{6,6}};
-    //joueur *listePointerJoueurs = calloc(4,sizeof(joueur)); // !!!!!! free ca faire un max de valgrind pour bien check 0 leaks
+    joueur *listePointerJoueurs = calloc(4,sizeof(joueur)); // !!!!!! free ca faire un max de valgrind pour bien check 0 leaks
     for(int i = 0;i<nbJoueurs;i++)
     {
-        joueur* actuel = listePionJoueurs[i];
+        joueur* actuel = &listePointerJoueurs[i];
         actuel->nom = nomJoueurs[i];
         actuel->affiche = listeRepresentation[i];
         actuel->score = 0;
@@ -399,7 +381,6 @@ void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur li
         joueurActuel.x = listePosition[i][0];
         joueurActuel.y = listePosition[i][1];
         actuel->piece = joueurActuel;
-        printf("%s",actuel->nom);
         listePlateau[listePosition[i][0]][listePosition[i][1]].presenceJoueur = actuel;
     }
 }
@@ -434,7 +415,7 @@ void impressionJoueur(tuile presente)
     return;
 }
 
-void deplacement(tuile integrer,position oumettre,tuile listePlato[7][7])
+int deplacement(tuile *integrer,position oumettre,tuile listePlato[7][7])
 {
     return;
 }
