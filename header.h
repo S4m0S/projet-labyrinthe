@@ -8,9 +8,9 @@
 #define false 0
 #define tailleCase 3
 #define tailleLabyrinthe 7
-#define typeTuileEnT 500
-#define typeTuileEnL 501
-#define typeTuileEnI 502
+#define typeTuileEnT 0
+#define typeTuileEnL 1
+#define typeTuileEnI 2
 #define nbTresor 24
 
 typedef char* string;
@@ -47,12 +47,14 @@ typedef struct tuile{           // !! On doit trouver un moyen de voir où la pi
 }tuile;
 
 
+
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3]);
 bool init(int nbJoueurs,string nomJoueurs[nbJoueurs]);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
 void affichageCase(const char fond[3][3],int k,tuile actuelle);
 void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[],tuile listePlateau[tailleLabyrinthe][tailleLabyrinthe]);
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece);
+bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition);
 
 
 
@@ -105,7 +107,7 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
             }
             printf("\n");
         }
-        printf("\n\n");
+        printf("\n");
     }
 }
 
