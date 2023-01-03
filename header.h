@@ -439,24 +439,27 @@ bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
 
 
 bool bougerJoueur(joueur Joueur, position nouvellePos, tuile listePlato[7][7],position anciennePos){
-    char[3][3] nouvelleCase, ancienneCase;
-    affichageCase(nouvelleCase,listePlato[x.nouvellePos][y.nouvellePos]);
-    affichageCase(ancienneCase,listePlato[x.anciennePos][y.anciennePos]);
-    if(x.anciennePos-1>=0&&x.nouvellePos==x.anciennePos-1&&y.nouvellePos==y.anciennePos){
-        if( nouvelleCase[2][1]!=#&&ancienneCase[0][1]!=#){
-            x.posJoueur.Joueur=x.anciennePos-1;}
+    char nouvelleCase[3][3], ancienneCase[3][3];
+    CageCase(nouvelleCase,listePlato[nouvellePos.x][nouvellePos.y]);
+    affichageCase(ancienneCase,1,listePlato[anciennePos.x][anciennePos.y]);
+    if(anciennePos.x-1>=0&&nouvellePos.x==anciennePos.x-1&&nouvellePos.y==anciennePos.y){
+        if( nouvelleCase[2][1]!='#'&&ancienneCase[0][1]!='#'){
+        Joueur.piece.x=anciennePos.x-1;}
     }
-    if(x.anciennePos+1<=7&&x.nouvellePos==x.anciennePos+1&&y.nouvellePos==y.anciennePos){
-        if(nouvelleCase[0][1]!=#&&ancienneCase[2][1]!=#){
-            x.posJoueur.Joueur=x.anciennePos+1;}
+    if(anciennePos.x+1<=7&&nouvellePos.x==anciennePos.x+1&&nouvellePos.y==anciennePos.y){
+        if(nouvelleCase[0][1]!='#'&&ancienneCase[2][1]!='#'){
+        Joueur.piece.x=anciennePos.x+1;}
     }
-    if(y.anciennePos-1>=0&&y.nouvellePos==y.anciennePos-1&&x.nouvellePos==x.anciennePos){
-        if(nouvelleCase[1][0]!=#&&ancienneCase[1][2]!=#){
-            y.posJoueur.Joueur=y.anciennePos-1;}
+    if(anciennePos.y-1>=0&&nouvellePos.y==anciennePos.y-1&&nouvellePos.x==anciennePos.x){
+        if(nouvelleCase[1][0]!='#'&&ancienneCase[1][2]!='#'){
+            Joueur.piece.y=anciennePos.y-1;}
     }
-    if(y.anciennePos+1>=7&&y.nouvellePos==y.anciennePos+1&&x.nouvellePos==x.anciennePos){
-        if(nouvelleCase[1][2]!=#&&ancienneCase[1][0]!=#){
-            y.posJoueur.Joueur=y.anciennePos-1;}
+    if(anciennePos.y+1>=7&&nouvellePos.y==anciennePos.y+1&&nouvellePos.x=anciennePos.x){
+        if(nouvelleCase[1][2]!='#'&&ancienneCase[1][0]!='#'){
+            Joueur.piece.y=anciennePos.y-1;}
+    }
+    else{
+        return false;
     }
 
 

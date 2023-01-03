@@ -12,7 +12,7 @@ void menuInitial(){//soit on fait la declaration du choix ici
     system("cls");
     switch(choix){
         case 1:
-            char listeNomsJoueurs[], listePionsJoueurs[];
+            char listeNomsJoueurs, listePionsJoueurs;
             joueur listeJoueurs;
             DemarrageMenu(listeNomsJoueurs,listeJoueurs,listePionsJoueurs);
             //EnJeux();
