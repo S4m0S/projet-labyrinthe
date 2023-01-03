@@ -5,7 +5,7 @@
 void menuInitial(){//soit on fait la declaration du choix ici
     int choix;//soit on déclare ici
     do{
-    system("cls");
+    system("cls");//on est obligé de mettre ça ?? L'usage de cette commande doit être limité, car c'est laid dans un code et plutôt couteux en ressources.
     printf("1. Nouvelle partie\n 2.Credits/Regles du jeu\n 3.Quitter\n");
     scanf("%d",&choix);}
     while(choix<1&&choix>3);
@@ -28,7 +28,7 @@ void menuInitial(){//soit on fait la declaration du choix ici
             break;
         case 3:
             break;
-            //jsp trop quoi mettre 
+            //jsp trop quoi mettree 
     }
 }
 
