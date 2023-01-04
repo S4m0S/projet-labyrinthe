@@ -8,7 +8,8 @@ int main(int argc, char *argv[])
     else if((int) *argv[1]==48)
     {
         string nomJoueurs[4] = {"Michael","Julien","Jean","Adam"};
-        return init(4,nomJoueurs);
+        char listeTest[] = {'w','x','c','v'};
+        return init(4,nomJoueurs,listeTest);
     }
     else if((int) *argv[1]==49)
     {

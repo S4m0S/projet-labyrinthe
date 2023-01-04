@@ -49,19 +49,24 @@ typedef struct tuile{           // !! On doit trouver un moyen de voir où la pi
 
 
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3]);
-bool init(int nbJoueurs,string nomJoueurs[nbJoueurs]);
+bool init(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs],tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe],joueur listeJoueurs[nbJoueurs]);
 void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
 void affichageCase(const char fond[3][3],int k,tuile actuelle);
 void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[],tuile listePlateau[tailleLabyrinthe][tailleLabyrinthe]);
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece);
 bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition);
+void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
 
 
 
-
-bool init(int nbJoueurs,string nomJoueurs[nbJoueurs])         // fonction d'initialisation du jeu une fois celle-ci effectuer on peut commencer a jouer 
-{                       // elle permet d'initialiser toutes les tuiles, de gerer le nombre de joueurs, la distrubution des cartes trésor...
-    srand(time(NULL));
+void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]){
+    tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe];  // tableau contenant le plateau de jeu avec toutes les tuiles
+    joueur listeJoueurs[nbJoueurs];                           // liste des joueurs
+    bool readyToPLay = false;
+    if(init(nbJoueurs,nomJoueurs,listePion,tableauTuiles,listeJoueurs))
+        readyToPLay = true;
+    else
+        return;
     const char typeT[tailleCase][tailleCase] = {{'#','#','#'},{' ',' ',' '},{'#',' ','#'}}; // type 0 : representation des pièces
     const char typeL[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ',' '},{'#','#','#'}}; // type 1 : sur le plateau grace a cela
     const char typeI[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ','#'},{'#',' ','#'}}; // type 2 : on peut les affichers
@@ -69,19 +74,28 @@ bool init(int nbJoueurs,string nomJoueurs[nbJoueurs])         // fonction d'init
     const char** typeLpointer = typeL;
     const char** typeIpointer = typeI;
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
-    tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe]; // tableau contenant le plateau de jeu avec toutes les tuiles
-    initialisationTuiles(tableauTuiles);
+    bool play = true;
+    int tourDe = 0
+    while(play)
+    {
+        printf("C'est le tour de %q",nomJoueurs[tourDe]);
+        while(getchar()!="\n");
+    }
+}
+
+
+bool init(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs],tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe],joueur listeJoueurs[nbJoueurs])         // fonction d'initialisation du jeu une fois celle-ci effectuer on peut commencer a jouer 
+{                       // elle permet d'initialiser toutes les tuiles, de gerer le nombre de joueurs, la distrubution des cartes trésor...
+    srand(time(NULL));
+    tresor tableauTresor[nbTresor];
+    initialisationTuiles(tableauTuiles,tableauTresor);
     
     // creation des joueurs 
-    joueur listeJoueurs[nbJoueurs];
-    char listeTest[] = {'w','x','c','v'};
-    initialisationJoueurs(nbJoueurs,nomJoueurs,listeJoueurs,listeTest,tableauTuiles);
-    printElement(tableauTuiles,typeTuile);
+    
+    initialisationJoueurs(nbJoueurs,nomJoueurs,listeJoueurs,listePion,tableauTuiles);
+    //printElement(tableauTuiles,typeTuile);
     
     // afficher les elements 
-
-
-    
     return true;
 }
 
@@ -471,3 +485,4 @@ bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int di
 
 
 }
+*/

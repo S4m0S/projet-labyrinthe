@@ -79,3 +79,59 @@ bool ReperageQuit(){
         return true;
     }
 }//on le met au debut de chaque tour et si cest vrai on lance sinon on arrete
+
+
+void menuBase(void)
+{
+    bool running = true;
+    int input; 
+    do{
+        printf("   1. Lancer une partie\n   2. Charger une partie\n   3. Modifiez les parametre\n   4. Quitter \n   Choisisez une option : ");
+        scanf("%i",&input);
+        switch (input)
+        {
+        case 1:
+            //fonction pour lancer la partie
+            break;
+        case 2:
+            //fonction pour charger une partie
+            break;
+        case 3 : 
+            //fonction pour modifiez les parametre
+            break;
+        case 4:
+            running = false;
+            break;
+        default:
+            printf("Mauvaise réponse dommage...");
+            break;
+        }
+        system("clear"); // ou cls sur windows
+    }while(running);
+}
+
+
+void menuLancement(void)
+{
+    bool pass;
+    int nbJoueur;
+    do
+    {
+        printf("Combien y aura-t-il de joueuers ?");
+        scanf("%i",&nbJoueur);
+    }while(nbJoueur<2 && nbJoueur>4);
+    string nomJoueur[i];
+    char pionJoueur[i];
+    for(int i = 0;i<nbJoueur;i++)
+    {
+        printf("Quel est le nom du joueur numero %i : ",i);
+        scanf("%s",nomJoueur[i]);
+        do{
+        printf("Quel sera votre pions ?").
+        scanf("%c",pionJoueur[i]);
+        }while(pionJoueur[i]=='#');
+    }
+    inGame(nbJoueur,nomJoueur,pionJoueur);
+    
+    
+}
