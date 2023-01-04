@@ -458,7 +458,7 @@ bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int di
                 Joueur.piece.y=nextCase.posActuelle.y;}
             return true;
     }
-    else if(direction==1&&posActu.y-1>=0){
+    else if(direction==3&&posActu.y-1>=0){
             nextCase= listePlato[posActu.x][posActu.y-1];
             if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==3&&nextCase.type==0)||(nextCase.orientation==0&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==2)||(nextCase.orientation==3&&nextCase.type==2)){
                 Joueur.piece.y=nextCase.posActuelle.y;}
