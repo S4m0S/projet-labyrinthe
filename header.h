@@ -94,7 +94,7 @@ bool init(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs],t
     
     initialisationJoueurs(nbJoueurs,nomJoueurs,listeJoueurs,listePion,tableauTuiles);
     //printElement(tableauTuiles,typeTuile);
-    
+    repartitionTresors(nbJoueurs,listeJoueurs,tableauTresor);
     // afficher les elements 
     return true;
 }
@@ -413,15 +413,16 @@ void initTresor(int* indexTresor,tresor* actuel,position* posPiece,tresor listeT
 }
 
 
-void repartitionTresors(int nbJoueurs,joueur listeJoueurs[nbJoueurs]){//jespere ca marche ca
+void repartitionTresors(int nbJoueurs,joueur listeJoueurs[nbJoueurs], tresor listeTresor[nbTresor]){//jespere ca marche ca
+    int tableauIndex[24]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23};
     for (int i=0;i<24/nbJoueurs;i++){
         for(int j=0;j<nbJoueurs;j++){
             int random=0;
             do{
             random=rand()%24;}
-            while(listeRepresentation[random]=='0');
-            listeJoueurs.listeTresor[j]=listeRepresentation[random];    // cet ligne bug et je comprend pas ce que veut dire le listeTresor.list...
-            listeRepresentation[random]='0';                            // apres reflexion tu me vois dans le regret de t'annoncer que ca marche pas 
+            while(tableauIndex[random]==100);
+            listeJoueurs[j].listeTresor[i]=listeTresor[random];    // cet ligne bug et je comprend pas ce que veut dire le listeTresor.list...
+            tableauIndex[random]=100;                            // apres reflexion tu me vois dans le regret de t'annoncer que ca marche pas 
 
     }}
 }
