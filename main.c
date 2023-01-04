@@ -9,7 +9,9 @@ int main(int argc, char *argv[])
     {
         string nomJoueurs[4] = {"Michael","Julien","Jean","Adam"};
         char listeTest[] = {'w','x','c','v'};
-        return init(4,nomJoueurs,listeTest);
+        tuile tableauLabyrinthe[tailleLabyrinthe][tailleLabyrinthe];
+        joueur listJoueur[4];
+        return init(4,nomJoueurs,listeTest,tableauLabyrinthe,listJoueur);
     }
     else if((int) *argv[1]==49)
     {
@@ -19,7 +21,7 @@ int main(int argc, char *argv[])
         {
             nomJoueurs[i] = argv[i+2];
         }
-        return init(nbJoueur,nomJoueurs);
+        //return init(nbJoueur,nomJoueurs);
     }
     printf("\n");
     printf("%i\n", argc);

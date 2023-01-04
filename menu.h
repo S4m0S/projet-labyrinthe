@@ -32,53 +32,8 @@ void menuInitial(){//soit on fait la declaration du choix ici
     }
 }
 
-void DemarrageMenu(char listeNomsJoueurs[],joueur listeJoueurs[],char listePionJoueurs[]){
-    char listeRepresentation[4] = {'♥','♦','♣','♠'};
-    int nbJoueurs;
-    char nom[50];
-    int nbPion;
-    system("cls");
-    printf("saisir le nombre de joueurs:\n");
-    scanf("%d",&nbJoueurs);
-    for(int i=0;i<nbJoueurs;i++){
-        system("cls");
-        printf("donner le nom du joueur %d",i);
-        fgets(nom,50,stdin);
-        listeNomsJoueurs[i]=*nom;
-        printf("saisir votre pion: 1.♥\n2.♦\n3.♣\n4.♠\n");
-        scanf("%d",&nbPion);
-        switch(nbPion){
-            case 1:
-                listePionJoueurs[i]=listeRepresentation[0];
-                break;
-            case 2:
-                listePionJoueurs[i]=listeRepresentation[1];
-                break;
-            case 3:
-                listePionJoueurs[i]=listeRepresentation[2];
-                break;
-            case 4:
-                listePionJoueurs[i]=listeRepresentation[3];
-                break;
-                
-        }
-        //pour la couleur vu qu'on la pas mis dans la structure joueur jsp    
 
-    }
-    initialisationJouers(nbJoueurs,listeNomsJoueurs,listeJoueurs,listePionJoueurs);
-}
 
-bool ReperageQuit(){
-    string renvoi;
-    printf("presser q pour quitter:");
-    fgets(renvoi,100,stdin);
-    if (renvoi=='q'||renvoi=='Q'){
-        return false;
-    }
-    else{
-        return true;
-    }
-}//on le met au debut de chaque tour et si cest vrai on lance sinon on arrete
 
 
 void menuBase(void)
@@ -120,14 +75,14 @@ void menuLancement(void)
         printf("Combien y aura-t-il de joueuers ?");
         scanf("%i",&nbJoueur);
     }while(nbJoueur<2 && nbJoueur>4);
-    string nomJoueur[i];
-    char pionJoueur[i];
+    string nomJoueur[nbJoueur];
+    char pionJoueur[nbJoueur];
     for(int i = 0;i<nbJoueur;i++)
     {
         printf("Quel est le nom du joueur numero %i : ",i);
         scanf("%s",nomJoueur[i]);
         do{
-        printf("Quel sera votre pions ?").
+        printf("Quel sera votre pions ?");
         scanf("%c",pionJoueur[i]);
         }while(pionJoueur[i]=='#');
     }

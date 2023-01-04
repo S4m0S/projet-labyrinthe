@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "playing.h"
+#include <ncursesw/ncurses.h>
 
 #define true 1
 #define false 0
@@ -56,6 +58,7 @@ void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur li
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece);
 bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition);
 void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
+bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char* tableau[3]);
 
 
 
@@ -74,12 +77,39 @@ void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]
     const char** typeLpointer = typeL;
     const char** typeIpointer = typeI;
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
+    initscr();  // Initialise l'interface ncursed
+    cbreak();  // Désactive le buffering des entrées clavier
+    noecho();  // Désactive l'affichage des entrées clavier
+    keypad(stdscr, TRUE);
     bool play = true;
-    int tourDe = 0
+    int tourDe = 0;
+    char input;
     while(play)
     {
         printf("C'est le tour de %q",nomJoueurs[tourDe]);
-        while(getchar()!="\n");
+        while(getchar()!='\n');
+        printf("Bouger une pièce sur le terain !");
+        /*
+        do{
+            input = getchar();
+            if(input == 37)//left
+
+            else if(intput == 38)// top
+
+            else if(input == 39) // right
+
+            else if(input==40)  //bottom
+            printElement(tableauTuiles,typeTuile);
+            
+        }
+        while(getchar()!='\n');*/
+        printf("Bouger votre pion");
+        do{
+            input = getch();
+            if(input==KEY_UP)
+                bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,0,typeTuile);
+        }while(getchar()!='n');
+
     }
 }
 
