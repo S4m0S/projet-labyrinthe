@@ -486,4 +486,3 @@ bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int di
 
 
 }
-*/
