@@ -438,26 +438,31 @@ bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
 }
 
 
-bool bougerJoueur(joueur Joueur, position nouvellePos, tuile listePlato[7][7],position anciennePos){
-    char nouvelleCase[3][3], ancienneCase[3][3];
-    CageCase(nouvelleCase,listePlato[nouvellePos.x][nouvellePos.y]);
-    affichageCase(ancienneCase,1,listePlato[anciennePos.x][anciennePos.y]);
-    if(anciennePos.x-1>=0&&nouvellePos.x==anciennePos.x-1&&nouvellePos.y==anciennePos.y){
-        if( nouvelleCase[2][1]!='#'&&ancienneCase[0][1]!='#'){
-        Joueur.piece.x=anciennePos.x-1;}
+bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char* tableau[3]){
+    tuile nextCase;
+    if(direction==0&&posActu.x-1>=0){
+            nextCase= listePlato[posActu.x-1][posActu.y];
+            if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==2)||(nextCase.orientation==2&&nextCase.type==2)){
+                Joueur.piece.x=nextCase.posActuelle.x;}
+            return true;
     }
-    if(anciennePos.x+1<=7&&nouvellePos.x==anciennePos.x+1&&nouvellePos.y==anciennePos.y){
-        if(nouvelleCase[0][1]!='#'&&ancienneCase[2][1]!='#'){
-        Joueur.piece.x=anciennePos.x+1;}
+    else if(direction==2&&posActu.x+1<=6){
+            nextCase= listePlato[posActu.x+1][posActu.y];
+            if ((nextCase.orientation==0&&nextCase.type==1)||(nextCase.orientation==3&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==2)||(nextCase.orientation==0&&nextCase.type==2)||(nextCase.orientation==1&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==3&&nextCase.type==0)){
+                Joueur.piece.x=nextCase.posActuelle.x;}
+            return  true;
     }
-    if(anciennePos.y-1>=0&&nouvellePos.y==anciennePos.y-1&&nouvellePos.x==anciennePos.x){
-        if(nouvelleCase[1][0]!='#'&&ancienneCase[1][2]!='#'){
-            Joueur.piece.y=anciennePos.y-1;}
+    else if(direction==1&&posActu.y+1<=6){
+            nextCase= listePlato[posActu.x][posActu.y+1];
+            if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==2)||(nextCase.orientation==3&&nextCase.type==2)){
+                Joueur.piece.y=nextCase.posActuelle.y;}
+            return true;
     }
-    if(anciennePos.y+1>=7&&nouvellePos.y==anciennePos.y+1&&nouvellePos.x=anciennePos.x){
-        if(nouvelleCase[1][2]!='#'&&ancienneCase[1][0]!='#'){
-            Joueur.piece.y=anciennePos.y-1;}
-    }
+    else if(direction==1&&posActu.y-1>=0){
+            nextCase= listePlato[posActu.x][posActu.y-1];
+            if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==3&&nextCase.type==0)||(nextCase.orientation==0&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==2)||(nextCase.orientation==3&&nextCase.type==2)){
+                Joueur.piece.y=nextCase.posActuelle.y;}
+            return true;}
     else{
         return false;
     }
