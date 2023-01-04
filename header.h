@@ -4,7 +4,7 @@
 #include <time.h>
 
 #include "playing.h"
-#include <ncursesw/ncurses.h>
+//#include <ncursesw/ncurses.h>
 
 #define true 1
 #define false 0
@@ -52,14 +52,14 @@ typedef struct tuile{           // !! On doit trouver un moyen de voir où la pi
 
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3]);
 bool init(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs],tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe],joueur listeJoueurs[nbJoueurs]);
-void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]);
+void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],tresor tableauTresor[nbTresor]);
 void affichageCase(const char fond[3][3],int k,tuile actuelle);
 void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[],tuile listePlateau[tailleLabyrinthe][tailleLabyrinthe]);
-void initTresor(int* indexTresor,tresor* actuel,position* posPiece);
+void initTresor(int* indexTresor,tresor* actuel,position* posPiece,tresor listeTresor[nbTresor]);
 bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition);
 void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
 bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char* tableau[3]);
-
+void repartitionTresors(int nbJoueurs,joueur listeJoueurs[nbJoueurs], tresor listeTresor[nbTresor]);
 
 
 void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]){
@@ -77,10 +77,6 @@ void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]
     const char** typeLpointer = typeL;
     const char** typeIpointer = typeI;
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
-    initscr();  // Initialise l'interface ncursed
-    cbreak();  // Désactive le buffering des entrées clavier
-    noecho();  // Désactive l'affichage des entrées clavier
-    keypad(stdscr, TRUE);
     bool play = true;
     int tourDe = 0;
     char input;
@@ -105,8 +101,8 @@ void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]
         while(getchar()!='\n');*/
         printf("Bouger votre pion");
         do{
-            input = getch();
-            if(input==KEY_UP)
+            input = getchar_unlocked();
+            if(input==0)
                 bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,0,typeTuile);
         }while(getchar()!='n');
 
@@ -438,7 +434,7 @@ void initTresor(int* indexTresor,tresor* actuel,position* posPiece,tresor listeT
     actuel->affiche = listeRepresentation[*indexTresor];
     actuel->find = false;
     actuel->piece = posPiece;
-    listeTresor[indexTresor] = *actuel;
+    listeTresor[*indexTresor] = *actuel;
     *indexTresor+=1;
 }
 
