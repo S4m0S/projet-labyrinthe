@@ -175,7 +175,7 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
 
 
 
-void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe])
+void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],tresor tableauTresor[nbTresor])
 {   // cette fonction permet d'initialiser les tuiles du tableau aléatoirement 
     // elle s'occupe de la mise en place des tuiles dans le tableau passer en parrametre
 
@@ -233,9 +233,9 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 0;
                             tresor nouveau;
-                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
+                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle,tableauTresor);
                             actuel.treasure = nouveau;
-                            break;
+                            break; 
                         case 6:
                             actuel.type = typeTuileEnL;
                             actuel.orientation = 2;
@@ -259,7 +259,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             break;
                         }
                         tresor nouveau;
-                        initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
+                        initTresor(&indexTresor,&nouveau,&actuel.posActuelle,tableauTresor);
                         actuel.treasure = nouveau;
                         break;
                     case 4 :
@@ -280,7 +280,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             break;
                         }
                         //tresor nouveau;
-                        initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
+                        initTresor(&indexTresor,&nouveau,&actuel.posActuelle,tableauTresor);
                         actuel.treasure = nouveau;
                         break;
                     case 6 : 
@@ -296,7 +296,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             actuel.type = typeTuileEnT;
                             actuel.orientation = 2;
                             tresor nouveau;
-                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
+                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle,tableauTresor);
                             actuel.treasure = nouveau;
                             break;
                         case 6:
@@ -325,7 +325,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             possible = true;
                             actuel.type = typeTuileEnT;
                             tresor nouveau;
-                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
+                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle,tableauTresor);
                             actuel.treasure = nouveau;
                             tuileTnombreAvecTresor--;
                         }
@@ -336,7 +336,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
                             possible =true;
                             actuel.type = typeTuileEnL;
                             tresor nouveau;
-                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle);
+                            initTresor(&indexTresor,&nouveau,&actuel.posActuelle,tableauTresor);
                             actuel.treasure = nouveau;
                             tuileLnombreAvecTresor--;
                             // tresor !!
@@ -364,6 +364,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             }
             
             tableauTuile[i][j] = actuel;
+            
         }
     }
 }
@@ -387,30 +388,30 @@ void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur li
     }
 }
 
-void initTresor(int* indexTresor,tresor* actuel,position* posPiece)
+void initTresor(int* indexTresor,tresor* actuel,position* posPiece,tresor listeTresor[nbTresor])
 {
     char listeRepresentation[nbTresor] = {'1','2','3','4','5','6','7','8','9','0','A','Z','E','R','T','Y','U','I','O','P','Q','S','D','F'};
     actuel->affiche = listeRepresentation[*indexTresor];
     actuel->find = false;
     actuel->piece = posPiece;
+    listeTresor[indexTresor] = *actuel;
     *indexTresor+=1;
 }
 
-/*
-void repartitionTresors(int nbJoueurs,joueur listeJoueurs[]){//jespere ca marche ca
-    char listeRepresentation[nbTresor] = {'*','^','$','£','¤','µ','%','ù','¨','!','§',':','/','.',';','?',',','+','=','@','ç'};
+
+void repartitionTresors(int nbJoueurs,joueur listeJoueurs[nbJoueurs]){//jespere ca marche ca
     for (int i=0;i<24/nbJoueurs;i++){
         for(int j=0;j<nbJoueurs;j++){
             int random=0;
             do{
             random=rand()%24;}
             while(listeRepresentation[random]=='0');
-            listeTresor.listeJoueurs[j]=listeRepresentation[random];    // cet ligne bug et je comprend pas ce que veut dire le listeTresor.list...
+            listeJoueurs.listeTresor[j]=listeRepresentation[random];    // cet ligne bug et je comprend pas ce que veut dire le listeTresor.list...
             listeRepresentation[random]='0';                            // apres reflexion tu me vois dans le regret de t'annoncer que ca marche pas 
 
     }}
 }
-*/
+
 
 void impressionJoueur(tuile presente)
 {
