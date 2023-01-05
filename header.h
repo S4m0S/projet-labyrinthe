@@ -69,7 +69,7 @@ void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur li
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece,tresor listeTresor[nbTresor]);
 bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition);
 void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
-bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char* tableau[3]);
+bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]);
 void repartitionTresors(int nbJoueurs,joueur listeJoueurs[nbJoueurs], tresor listeTresor[nbTresor]);
 
 
@@ -112,11 +112,13 @@ void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]
         while(getchar()!='\n');*/
         printf("Bouger votre pion");
         do{
-            input = getchar_unlocked();
-            if(input==0)
+            input = getchar();
+            if((int) input==0)
                 bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,0,typeTuile);
         }while(getchar()!='n');
-
+        tourDe++;
+        tourDe = tourDe%4;
+        //fonction pour check si un joueur a gagner;
     }
 }
 
@@ -491,7 +493,7 @@ bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
 }
 
 
-bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char* tableau[3]){
+bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]){
     tuile nextCase;
     if(direction==0&&posActu.x-1>=0){
             nextCase= listePlato[posActu.x-1][posActu.y];

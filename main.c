@@ -1,5 +1,5 @@
 #include "header.h"
-//#include "menu.h"
+#include "menu.h"
 int main(int argc, char *argv[])
 {
     if(argc==1)
@@ -22,6 +22,10 @@ int main(int argc, char *argv[])
             nomJoueurs[i] = argv[i+2];
         }
         //return init(nbJoueur,nomJoueurs);
+    }
+    else if((int) *argv[1] == 50)
+    {
+        menuBase();
     }
     printf("\n");
     printf("%i\n", argc);

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "header.h"
-
+//#include "header.h"
+/*
 void menuInitial(){//soit on fait la declaration du choix ici
     int choix;//soit on déclare ici
     do{
@@ -30,7 +30,7 @@ void menuInitial(){//soit on fait la declaration du choix ici
             break;
             //jsp trop quoi mettree 
     }
-}
+}*/
 
 
 
@@ -43,6 +43,7 @@ void menuBase(void)
     do{
         printf("   1. Lancer une partie\n   2. Charger une partie\n   3. Modifiez les parametre\n   4. Quitter \n   Choisisez une option : ");
         scanf("%i",&input);
+        while(getchar()!='\n');
         switch (input)
         {
         case 1:
@@ -76,7 +77,7 @@ void menuLancement(void)
         printf("Combien y aura-t-il de joueuers ?");
         scanf("%i",&nbJoueur);
     }while(nbJoueur<2 && nbJoueur>4);
-    string nomJoueur[nbJoueur];
+    char nomJoueur[nbJoueur];
     char pionJoueur[nbJoueur];
     for(int i = 0;i<nbJoueur;i++)
     {
