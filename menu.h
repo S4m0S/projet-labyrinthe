@@ -46,6 +46,7 @@ void menuBase(void)
         switch (input)
         {
         case 1:
+            menuLancement();
             //fonction pour lancer la partie
             break;
         case 2:
@@ -89,4 +90,31 @@ void menuLancement(void)
     inGame(nbJoueur,nomJoueur,pionJoueur);
     
     
+}
+
+void chargerLesPartis(void)
+{
+    bool running = true;
+    //charger les partis
+    int nbPartis = 0;
+    date listeDate[10];
+    int choix;
+    while(running)
+    {
+        if(nbPartis==0)
+        {
+            printf("Aucune partis n'est actuellement disponible, commencer en une nouvelle !");
+            while(getchar()!='\n');
+            running = false;
+        }
+        else
+        {
+            for(int i = 0;i<nbPartis;i++)
+            {
+                printf("Partie numero %i, vous y avez jouez le %i/%i/%i à %i:%i:%i \n",i+1,listeDate[i].day,listeDate[i].month,listeDate[i].year,listeDate[i].hours,listeDate[i].minutes,listeDate[i].seconds);
+            }
+            printf("Quelle partie souhaitez vous reprendre ? (0 pour quitter) ");
+            scanf("%i",&choix);
+        }
+    }
 }

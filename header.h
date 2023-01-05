@@ -19,6 +19,17 @@ typedef char* string;
 typedef short int bool; 
 
 
+typedef struct date
+{
+    int day;
+    int year;
+    int month;
+    int hours;
+    int minutes;
+    int seconds;
+}date;
+
+
 // y sur l'axe des horizontale et x sur l'axe verticale 
 typedef struct position{
     int x;
