@@ -11,7 +11,9 @@ int main(int argc, char *argv[])
         char listeTest[] = {'w','x','c','v'};
         tuile tableauLabyrinthe[tailleLabyrinthe][tailleLabyrinthe];
         joueur listJoueur[4];
-        return init(4,nomJoueurs,listeTest,tableauLabyrinthe,listJoueur);
+        bool test =  init(4,nomJoueurs,listeTest,tableauLabyrinthe,listJoueur);
+        printf("PAS ERREUR\n");
+        inGame(4, nomJoueurs,listeTest);
     }
     else if((int) *argv[1]==49)
     {

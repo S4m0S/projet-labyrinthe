@@ -68,7 +68,7 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle);
 void initialisationJoueurs(int nbJoueurs, string nomJoueurs[nbJoueurs],joueur listeJoueurs[nbJoueurs],char listePionJoueurs[],tuile listePlateau[tailleLabyrinthe][tailleLabyrinthe]);
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece,tresor listeTresor[nbTresor]);
 bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition);
-void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
+//void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
 bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]);
 void repartitionTresors(int nbJoueurs,joueur listeJoueurs[nbJoueurs], tresor listeTresor[nbTresor]);
 
@@ -77,6 +77,7 @@ void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe];  // tableau contenant le plateau de jeu avec toutes les tuiles
     joueur listeJoueurs[nbJoueurs];                           // liste des joueurs
     bool readyToPLay = false;
+    printf("Pas erreur\n");
     if(init(nbJoueurs,nomJoueurs,listePion,tableauTuiles,listeJoueurs))
         readyToPLay = true;
     else
@@ -91,9 +92,10 @@ void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]
     bool play = true;
     int tourDe = 0;
     char input;
+    printf("Pas erreur\n");
     while(play)
     {
-        printf("C'est le tour de %q",nomJoueurs[tourDe]);
+        printf("C'est le tour de %s",nomJoueurs[tourDe]);
         while(getchar()!='\n');
         printf("Bouger une pièce sur le terain !");
         /*
@@ -113,8 +115,14 @@ void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]
         printf("Bouger votre pion");
         do{
             input = getchar();
-            if((int) input==0)
+            if(input=='z')
                 bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,0,typeTuile);
+            else if(input=='d')
+                bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,1,typeTuile);
+            else if(input=='s')
+                bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,2,typeTuile);
+            else if(input=='q')
+                bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,3,typeTuile);
         }while(getchar()!='n');
         tourDe++;
         tourDe = tourDe%4;

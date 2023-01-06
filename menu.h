@@ -39,7 +39,8 @@ void menuInitial(){//soit on fait la declaration du choix ici
 void menuBase(void)
 {
     bool running = true;
-    int input; 
+    int input;
+    system("clear"); // ou cls si windows 
     do{
         printf("   1. Lancer une partie\n   2. Charger une partie\n   3. Modifiez les parametre\n   4. Quitter \n   Choisisez une option : ");
         scanf("%i",&input);
@@ -74,20 +75,26 @@ void menuLancement(void)
     int nbJoueur;
     do
     {
-        printf("Combien y aura-t-il de joueuers ?");
+        printf("Combien y aura-t-il de joueurs : ");
         scanf("%i",&nbJoueur);
-    }while(nbJoueur<2 && nbJoueur>4);
-    char nomJoueur[nbJoueur];
+        //while(getchar()!='\n');
+    }while(nbJoueur<2 || nbJoueur>4);
+    system("clear");
+    char nomJoueur[nbJoueur][30];
     char pionJoueur[nbJoueur];
     for(int i = 0;i<nbJoueur;i++)
     {
-        printf("Quel est le nom du joueur numero %i : ",i);
-        scanf("%s",nomJoueur[i]);
+        printf("Quel est le nom du joueur numero %i : ",i+1);
+        scanf("%s",&nomJoueur[i]);
+        while(getchar()!='\n');
         do{
-        printf("Quel sera votre pions ?");
-        scanf("%c",pionJoueur[i]);
+        printf("Quel sera votre pions : ");
+        scanf("%c",&pionJoueur[i]);
+        while(getchar()!='\n');
         }while(pionJoueur[i]=='#');
+        system("clear");
     }
+    printf("OUI");
     inGame(nbJoueur,nomJoueur,pionJoueur);
     
     
