@@ -151,7 +151,7 @@ void myloop(int nbJoueur,char listePion[4])
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe];
     char (*listeNom)[4] = {"Adam","MIKE","JUGE","JEAN"};
     joueur listeJoueur[4];
-    tuile* out;
+    tuile* out = malloc(sizeof(tuile));
     printf("OUII\n");
     //init(nbJoueur,listeNom,listePion,tableauTuiles,listeJoueur,out);
     srand(time(NULL));
@@ -459,11 +459,13 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             
         }
     }
+    printf("ARRIVE\n");
     dehors->moove = true;
     dehors->orientation = rand() %4;
     dehors->posActuelle.x = -1;
     dehors->posActuelle.y = -1;
     dehors->presenceJoueur = NULL;
+    printf("ARRIVE\n");
     if(tuileLnombreAvecTresor>0 || tuileTnombreAvecTresor >0)
     {
         tresor nouveau;
@@ -477,6 +479,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
         dehors->treasure = nouveau;
         dehors->type = tuileInombre=1 ? typeTuileEnI:typeTuileEnL;
     }
+    printf("ARRIVE\n");
     
     /*
     do{
