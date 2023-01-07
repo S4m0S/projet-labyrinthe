@@ -75,9 +75,9 @@ void repartitionTresors(int nbJoueurs,joueur listeJoueurs[4], tresor listeTresor
 
 void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe];  // tableau contenant le plateau de jeu avec toutes les tuiles
-    joueur listeJoueurs[4];                           // liste des joueurs
+    joueur* listeJoueurs = calloc(4,sizeof(joueur));                           // liste des joueurs
     bool readyToPLay = false;
-    tuile* out;
+    tuile* out = malloc(sizeof(tuile));
     if(init(nbJoueurs,nomJoueurs,listePion,tableauTuiles,listeJoueurs,out))
         readyToPLay = true;
     else
@@ -150,15 +150,23 @@ void myloop(int nbJoueur,char listePion[4])
     const char** typeTuile[3] = {typeTpointer, typeLpointer, typeIpointer}; // liste contenant toutes les addresses des representations des pièces 
     tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe];
     char (*listeNom)[4] = {"Adam","MIKE","JUGE","JEAN"};
-    joueur listeJoueur[4];
+    joueur *listeJoueur = calloc(4,sizeof(joueur));
     tuile* out = malloc(sizeof(tuile));
     printf("OUII\n");
     //init(nbJoueur,listeNom,listePion,tableauTuiles,listeJoueur,out);
     srand(time(NULL));
     tresor tableauTresor[nbTresor];
     initialisationTuiles(tableauTuiles,tableauTresor,out);
+    initialisationJoueurs(nbJoueur,listeNom,listeJoueur,listePion,tableauTuiles);
     printElement(tableauTuiles,typeTuile);
+    repartitionTresors(nbJoueur,listeJoueur,tableauTresor);
+    
+}
 
+
+void printTuileOut(tuile out)
+{
+    goto
 }
 
 
@@ -181,11 +189,12 @@ bool init(int nbJoueurs,string nomJoueurs[4],char listePion[4],tuile tableauTuil
 //  fonction de test 
 void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const char** typeTuile[3])
 {   
-    
+    printf("\n\n\n\n");
     for(int i = 0 ; i<tailleLabyrinthe;i++)
     {
         for(int k =0;k<tailleCase;k++)
         {
+            printf("     ");
             for(int j = 0;j<tailleLabyrinthe;j++)
             {
                 // gerer l'orientation ici 
@@ -201,6 +210,7 @@ void printElement(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe],const c
         }
         printf("\n");
     }
+    printf("\n\n\n\n");
 }
 
 void affichageCase(const char fond[3][3],int k,tuile actuelle)
