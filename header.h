@@ -464,8 +464,20 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
     dehors->posActuelle.x = -1;
     dehors->posActuelle.y = -1;
     dehors->presenceJoueur = NULL;
-    if(tuileLnombreAvecTresor>0 )
-    dehors->treasure
+    if(tuileLnombreAvecTresor>0 || tuileTnombreAvecTresor >0)
+    {
+        tresor nouveau;
+        initTresor(&indexTresor,&nouveau,&dehors->posActuelle,tableauTresor);
+        dehors->treasure = nouveau;
+        dehors->type = tuileLnombreAvecTresor=1 ? typeTuileEnL:typeTuileEnT;
+    }
+    else{
+        tresor nouveau;
+        nouveau.piece = NULL;
+        dehors->treasure = nouveau;
+        dehors->type = tuileInombre=1 ? typeTuileEnI:typeTuileEnL;
+    }
+    
     /*
     do{
             possible = false;
