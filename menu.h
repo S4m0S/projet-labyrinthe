@@ -35,7 +35,7 @@ void menuInitial(){//soit on fait la declaration du choix ici
 
 
 
-
+void menuLancement(void);
 void menuBase(void)
 {
     bool running = true;
@@ -80,8 +80,8 @@ void menuLancement(void)
         //while(getchar()!='\n');
     }while(nbJoueur<2 || nbJoueur>4);
     system("clear");
-    char nomJoueur[nbJoueur][30];
-    char pionJoueur[nbJoueur];
+    string nomJoueur[4];
+    char pionJoueur[4];
     for(int i = 0;i<nbJoueur;i++)
     {
         printf("Quel est le nom du joueur numero %i : ",i+1);
@@ -94,7 +94,7 @@ void menuLancement(void)
         }while(pionJoueur[i]=='#');
         system("clear");
     }
-    printf("OUI");
+    
     inGame(nbJoueur,nomJoueur,pionJoueur);
     
     
