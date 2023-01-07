@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
 
 #include "playing.h"
 //#include <ncursesw/ncurses.h>
@@ -92,7 +93,7 @@ void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
     bool play = true;
     printf("%c\n",tableauTuiles[0][0].presenceJoueur->affiche);
     while(getchar()!='\n');
-    system("clear");
+    system("cls");
     printElement(tableauTuiles,typeTuile);
     while(getchar()!='\n');
     int tourDe = 0;
@@ -132,7 +133,7 @@ void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
         tourDe++;
         tourDe = tourDe%4;
         //fonction pour check si un joueur a gagner;
-        system("clear");
+        system("cls");
     }
 }
 
@@ -152,7 +153,6 @@ void myloop(int nbJoueur,char listePion[4])
     char (*listeNom)[4] = {"Adam","MIKE","JUGE","JEAN"};
     joueur *listeJoueur = calloc(4,sizeof(joueur));
     tuile* out = malloc(sizeof(tuile));
-    printf("OUII\n");
     //init(nbJoueur,listeNom,listePion,tableauTuiles,listeJoueur,out);
     srand(time(NULL));
     tresor tableauTresor[nbTresor];
@@ -160,15 +160,41 @@ void myloop(int nbJoueur,char listePion[4])
     initialisationJoueurs(nbJoueur,listeNom,listeJoueur,listePion,tableauTuiles);
     printElement(tableauTuiles,typeTuile);
     repartitionTresors(nbJoueur,listeJoueur,tableauTresor);
-    
+    out->posActuelle.x = 0;
+    out->posActuelle.y = 1;
+
+
 }
 
 
-void printTuileOut(tuile out)
+
+void gotoligcol( int lig, int col ) {
+
+// ressources
+
+    COORD mycoord;
+
+    mycoord.X = col;
+
+    mycoord.Y = lig;
+
+    SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), mycoord );
+
+}
+
+void printTuileOut(tuile* out)
 {
-    goto
-}
 
+    for(int i = 0; i < tailleCase; i++)
+    {
+        gotoligcol(out->posActuelle.x*3,out->posActuelle.y*3+1);
+        for(int j = 0; j < tailleCase; j++)
+        {
+            printf("%c",out->type[i][j]);  // pas fini ca encore
+        }
+        printf("\n");
+    }
+}
 
 bool init(int nbJoueurs,string nomJoueurs[4],char listePion[4],tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe],joueur listeJoueurs[4],tuile * dehors)         // fonction d'initialisation du jeu une fois celle-ci effectuer on peut commencer a jouer 
 {                       // elle permet d'initialiser toutes les tuiles, de gerer le nombre de joueurs, la distrubution des cartes trésor...

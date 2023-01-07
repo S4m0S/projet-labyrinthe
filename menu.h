@@ -40,7 +40,7 @@ void menuBase(void)
 {
     bool running = true;
     int input;
-    system("clear"); // ou cls si windows 
+    system("cls"); // ou cls si windows
     do{
         printf("   1. Lancer une partie\n   2. Charger une partie\n   3. Modifiez les parametre\n   4. Quitter \n   Choisisez une option : ");
         scanf("%i",&input);
@@ -64,7 +64,7 @@ void menuBase(void)
             printf("Mauvaise réponse dommage...");
             break;
         }
-        system("clear"); // ou cls sur windows
+        system("cls"); // ou cls sur windows
     }while(running);
 }
 
@@ -79,7 +79,7 @@ void menuLancement(void)
         scanf("%i",&nbJoueur);
         //while(getchar()!='\n');
     }while(nbJoueur<2 || nbJoueur>4);
-    system("clear");
+    system("cls");
     string nomJoueur[4];
     char pionJoueur[4];
     for(int i = 0;i<nbJoueur;i++)
@@ -92,7 +92,7 @@ void menuLancement(void)
         scanf("%c",&pionJoueur[i]);
         while(getchar()!='\n');
         }while(pionJoueur[i]=='#');
-        system("clear");
+        system("cls");
     }
     
     inGame(nbJoueur,nomJoueur,pionJoueur);
