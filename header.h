@@ -72,6 +72,8 @@ bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
 //void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
 bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]);
 void repartitionTresors(int nbJoueurs,joueur listeJoueurs[4], tresor listeTresor[nbTresor]);
+void gotoligcol( int lig, int col );
+void printTuileOut(tuile* out,const char** typeTuile[3]);
 
 
 void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
@@ -162,8 +164,11 @@ void myloop(int nbJoueur,char listePion[4])
     repartitionTresors(nbJoueur,listeJoueur,tableauTresor);
     out->posActuelle.x = 0;
     out->posActuelle.y = 1;
-
-
+    system("cls");
+    printElement(tableauTuiles,typeTuile);
+    printTuileOut(out,typeTuile);
+    printf("le type de tuile est : %i",out->orientation);
+    while(getchar()!='\n');
 }
 
 
@@ -182,16 +187,19 @@ void gotoligcol( int lig, int col ) {
 
 }
 
-void printTuileOut(tuile* out)
-{
+void printTuileOut(tuile* out,const char** typeTuile[3])
 
+{
     for(int i = 0; i < tailleCase; i++)
     {
-        gotoligcol(out->posActuelle.x*3,out->posActuelle.y*3+1);
-        for(int j = 0; j < tailleCase; j++)
-        {
-            printf("%c",out->type[i][j]);  // pas fini ca encore
-        }
+        //gotoligcol(out->posActuelle.x*3,out->posActuelle.y*3+i);
+        gotoligcol(0,i);
+        if(out->type == typeTuileEnT)
+            affichageCase(typeTuile[0],i,*out);
+        else if(out->type == typeTuileEnL)
+            affichageCase(typeTuile[1],i,*out);
+        else
+            affichageCase(typeTuile[2],i,*out);
         printf("\n");
     }
 }
@@ -495,13 +503,11 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
             
         }
     }
-    printf("ARRIVE\n");
     dehors->moove = true;
     dehors->orientation = rand() %4;
     dehors->posActuelle.x = -1;
     dehors->posActuelle.y = -1;
     dehors->presenceJoueur = NULL;
-    printf("ARRIVE\n");
     if(tuileLnombreAvecTresor>0 || tuileTnombreAvecTresor >0)
     {
         tresor nouveau;
@@ -515,57 +521,9 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
         dehors->treasure = nouveau;
         dehors->type = tuileInombre=1 ? typeTuileEnI:typeTuileEnL;
     }
-    printf("ARRIVE\n");
-    
-    /*
-    do{
-            possible = false;
-            typeTuileAleatoire = rand() % 4;
-            switch (typeTuileAleatoire) // check de si la pièce aleatoire est dipso
-            {
-            case 0:
-                if(tuileTnombreAvecTresor != 0)
-                {
-                    possible = true;
-                    dehors->type = typeTuileEnT;
-                    tresor nouveau;
-                    initTresor(&indexTresor,&nouveau,&(dehors->posActuelle),tableauTresor);
-                    dehors->treasure = nouveau;
-                    tuileTnombreAvecTresor--;
-                }
-                break;
-            case 1:
-                if(tuileLnombreAvecTresor!=0)
-                {
-                    possible =true;
-                    dehors->type = typeTuileEnL;
-                    tresor nouveau;
-                    initTresor(&indexTresor,&nouveau,&(dehors->posActuelle),tableauTresor);
-                    dehors->treasure = nouveau;
-                    tuileLnombreAvecTresor--;
-                    // tresor !!
-                }
-                break;
-            case 2:
-                if(tuileLnombre != 0)
-                {
-                    possible = true;
-                    dehors->type = typeTuileEnL;
-                    tuileLnombre--;
-                }
-                break;
-            case 3:
-                if(tuileInombre!=0)
-                {
-                    possible = true;
-                    dehors->type = typeTuileEnI;
-                    tuileInombre--;
-                }
-                break;
-            }
-        }while(possible!=true);
-        */
-       printf("Voici le reste : %i ; %i; %i; %i\n",tuileInombre,tuileLnombre,tuileLnombreAvecTresor,tuileTnombreAvecTresor);
+    printf("peut-elle bouger ? %i\n",dehors->moove);
+    while(getchar()!='\n');
+
 }   
 
 void initialisationJoueurs(int nbJoueurs, string nomJoueurs[4],joueur listeJoueurs[4],char listePionJoueurs[],tuile listePlateau[tailleLabyrinthe][tailleLabyrinthe]){
