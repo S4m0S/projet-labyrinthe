@@ -95,7 +95,7 @@ void menuLancement(void)
         system("clear");
     }
     
-    inGame(nbJoueur,nomJoueur,pionJoueur);
+    myloop(nbJoueur,nomJoueur,pionJoueur);
     
     
 }

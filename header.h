@@ -70,7 +70,7 @@ void initialisationJoueurs(int nbJoueurs, string nomJoueurs[4],joueur listeJoueu
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece,tresor listeTresor[nbTresor]);
 void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition,const char** tableauTuile[3]);
 //void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
-bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]);
+bool bougerJoueur(joueur *myplayer, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]);
 void repartitionTresors(int nbJoueurs,joueur listeJoueurs[4], tresor listeTresor[nbTresor]);
 void gotoligcol( int lig, int col );
 void printTuileOut(tuile* out,const char** typeTuile[3]);
@@ -124,13 +124,13 @@ void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
         do{
             input = getchar();
             if(input=='z')
-                bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,0,typeTuile);
+                bougerJoueur(&listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,0,typeTuile);
             else if(input=='d')
-                bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,1,typeTuile);
+                bougerJoueur(&listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,1,typeTuile);
             else if(input=='s')
-                bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,2,typeTuile);
+                bougerJoueur(&listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,2,typeTuile);
             else if(input=='q')
-                bougerJoueur(listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,3,typeTuile);
+                bougerJoueur(&listeJoueurs[tourDe],listeJoueurs[tourDe].piece,tableauTuiles,3,typeTuile);
         }while(getchar()!='n');
         tourDe++;
         tourDe = tourDe%4;
@@ -142,7 +142,7 @@ void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
 
 
 
-void myloop(int nbJoueur,char listePion[4])
+void myloop(int nbJoueur,char listePion[4],string nomJoueur[4])
 {
     const char typeT[tailleCase][tailleCase] = {{'#','#','#'},{' ',' ',' '},{'#',' ','#'}}; // type 0 : representation des pièces
     const char typeL[tailleCase][tailleCase] = {{'#',' ','#'},{'#',' ',' '},{'#','#','#'}}; // type 1 : sur le plateau grace a cela
@@ -161,15 +161,22 @@ void myloop(int nbJoueur,char listePion[4])
     initialisationTuiles(tableauTuiles,tableauTresor,out);
     initialisationJoueurs(nbJoueur,listeNom,listeJoueur,listePion,tableauTuiles);
     repartitionTresors(nbJoueur,listeJoueur,tableauTresor);
-    out->posActuelle.x = 0;
+    out->posActuelle.x = -1;
     out->posActuelle.y = 1;
     system("clear");
     printElement(tableauTuiles,typeTuile);
     //printTuileOut(out,typeTuile);
     char input;
     bool pasDeplacer = true;
-    position derniere = {10,10};
+    position derniere = {0,0};
+    int indexPlaying = 0;
+    bool playing = true;
+    printf("\nPour vous dirigez utiliser les les touches z/q/s/d, pour tourner une pièce essayer la touche r.\n Enfin pour sortir du jeu c'est la touche a. Pour valider une case se sera g. \n On est parti ? ");
     while(getchar()!='\n');
+    system("clear");
+    printElement(tableauTuiles,typeTuile);
+    
+    while(playing){
     do{
         printf("Choisisez un endroit oû bouger la piece : ");
         scanf("%c",&input);
@@ -235,26 +242,59 @@ void myloop(int nbJoueur,char listePion[4])
             else
                 pasDeplacer=false;
         }
+        else if(input=='a');
+            playing =false;
     }while(input!='g' && pasDeplacer);
     bougerPiece(out,out->posActuelle,tableauTuiles,&derniere,typeTuile);
     input = 'm';
     do{
-        printf("Choisisez où bouger : ");
+        printf("position joueur : x  :  %i  ;   y   :   %i\n",listeJoueur[indexPlaying].piece.x,listeJoueur[indexPlaying].piece.y);
+        printf("Voici les prochains trésor que vous devrez trouver : ");
+        for(int l = 0;l<nbTresor/nbJoueur;l++)
+        {
+            if(listeJoueur[indexPlaying].listeTresor[l].find==false)
+                printf("%c ;",listeJoueur[indexPlaying].listeTresor[l].affiche);
+        }
+        printf("\nChoisisez où bouger : ");
         scanf("%c",&input);
         while(getchar()!='\n');
         if(input=='z')
-            bougerJoueur(listeJoueur[0],listeJoueur[0].piece,tableauTuiles,0,typeTuile);
+            bougerJoueur(&listeJoueur[indexPlaying],listeJoueur[indexPlaying].piece,tableauTuiles,0,typeTuile);
         else if(input=='d')
-            bougerJoueur(listeJoueur[0],listeJoueur[0].piece,tableauTuiles,1,typeTuile);
+            bougerJoueur(&listeJoueur[indexPlaying],listeJoueur[indexPlaying].piece,tableauTuiles,1,typeTuile);
         else if(input=='s')
-            bougerJoueur(listeJoueur[0],listeJoueur[0].piece,tableauTuiles,2,typeTuile);
+            bougerJoueur(&listeJoueur[indexPlaying],listeJoueur[indexPlaying].piece,tableauTuiles,2,typeTuile);
         else if(input=='q')
-            bougerJoueur(listeJoueur[0],listeJoueur[0].piece,tableauTuiles,3,typeTuile);
-        printf("position joueur : x  :  %i  ;   y   :   %i",listeJoueur[0].piece.x,listeJoueur[0].piece.y);
+            bougerJoueur(&listeJoueur[indexPlaying],listeJoueur[indexPlaying].piece,tableauTuiles,3,typeTuile);
+        
+        if(input=='a');
+            playing =false;
     }while(input!='g');
+    checkWinner(&listeJoueur[indexPlaying],nbJoueur);
+    if(listeJoueur[indexPlaying].score==nbTresor){
+        printf("Bravo, le joueur a gagner");
+        while(getchar()!='\n');
+        playing = false;
+    }
+    indexPlaying++;
+    indexPlaying = indexPlaying%nbJoueur;
+}
+
 }
 
 
+
+void checkWinner(joueur *player,int nbJoueur)
+{
+    for(int i = 0;i<nbTresor/nbJoueur;i++)
+    {
+        if(player->piece.x==player->listeTresor[i].piece->x && player->piece.y==player->listeTresor[i].piece->y)
+        {
+            player->score++;
+            player->listeTresor[i].find = true;
+        }
+    }
+}
 
 /*
 void gotoligcol( int lig, int col ) {
@@ -339,7 +379,7 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
         case 0:
             for(int j = 0;j<tailleCase;j++)
             {
-            if(k==1 && j==1 && actuelle.treasure.piece!= NULL)  // tresor probleme d'affichage 
+            if(k==1 && j==1 && actuelle.treasure.piece!= NULL && actuelle.treasure.find == false)  // tresor probleme d'affichage 
                 printf("%c",actuelle.treasure.affiche);             
             else if(k==1 && j==1 && actuelle.presenceJoueur != NULL)    // ou les personnage
                 printf("%c",actuelle.presenceJoueur->affiche);
@@ -352,7 +392,7 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
         case 1:
             for(int j = 0;j<tailleCase;j++)
             {
-            if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
+            if(k==1 && j==1 && actuelle.treasure.piece!= NULL && actuelle.treasure.find == false)
                 printf("%c",actuelle.treasure.affiche);
             else if(k==1 && j==1 && actuelle.presenceJoueur != NULL)
                 printf("%c",actuelle.presenceJoueur->affiche);
@@ -365,7 +405,7 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
         case 2:
             for(int j = 0;j<tailleCase;j++)
             {
-            if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
+            if(k==1 && j==1 && actuelle.treasure.piece!= NULL && actuelle.treasure.find == false)
                 printf("%c",actuelle.treasure.affiche);
             else if(k==1 && j==1 && actuelle.presenceJoueur != NULL)
                 printf("%c",actuelle.presenceJoueur->affiche);
@@ -378,7 +418,7 @@ void affichageCase(const char fond[3][3],int k,tuile actuelle)
         case 3:
             for(int j = 0;j<tailleCase;j++)
             {
-            if(k==1 && j==1 && actuelle.treasure.piece!= NULL)
+            if(k==1 && j==1 && actuelle.treasure.piece!= NULL && actuelle.treasure.find == false)
                 printf("%c",actuelle.treasure.affiche);
             else if(k==1 && j==1 && actuelle.presenceJoueur != NULL)
                 printf("%c",actuelle.presenceJoueur->affiche);
@@ -680,7 +720,7 @@ void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
 }
 
 
-bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]){
+/*bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]){
     tuile nextCase;
     if(direction==0&&posActu.x-1>=0){
             nextCase= listePlato[posActu.x-1][posActu.y];
@@ -717,14 +757,71 @@ bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int di
         return false;
     }
 }
-
-bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3])
+*/
+bool bougerJoueur(joueur *myplayer, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3])
 {
     tuile caseSuivante;
+    tuile caseActuel = listePlato[posActu.x][posActu.y];
     if(direction==0 && posActu.x!=0)
     {
         caseSuivante = listePlato[posActu.x-1][posActu.y];
-        if()
+        if((caseSuivante.type==typeTuileEnI && (caseSuivante.orientation==0||caseSuivante.orientation==2))||(caseSuivante.type==typeTuileEnL && (caseSuivante.orientation==1 || caseSuivante.orientation==2))||(caseSuivante.type==typeTuileEnT && (caseSuivante.orientation!=2)))
+        {
+            if((caseActuel.type==typeTuileEnI && (caseActuel.orientation==0||caseActuel.orientation==2))||(caseActuel.type==typeTuileEnL && (caseActuel.orientation==0 || caseActuel.orientation==3))||(caseActuel.type==typeTuileEnT && (caseActuel.orientation!=0)))
+            {
+                myplayer->piece.x--;
+                
+                listePlato[posActu.x--][posActu.y].presenceJoueur = myplayer;
+                listePlato[posActu.x][posActu.y].presenceJoueur = NULL;
+            }
+        }   
     }
+    else if(direction==2 && posActu.x!=6)
+    {
+        caseSuivante = listePlato[posActu.x+1][posActu.y];
+        if((caseSuivante.type==typeTuileEnI && (caseSuivante.orientation==0||caseSuivante.orientation==2))||(caseSuivante.type==typeTuileEnL && (caseSuivante.orientation==0 || caseSuivante.orientation==3))||(caseSuivante.type==typeTuileEnT && (caseSuivante.orientation!=0)))
+        {
+            if((caseActuel.type==typeTuileEnI && (caseActuel.orientation==0||caseActuel.orientation==2))||(caseActuel.type==typeTuileEnL && (caseActuel.orientation==1 || caseActuel.orientation==2))||(caseActuel.type==typeTuileEnT && (caseActuel.orientation!=2)))
+            {
+                myplayer->piece.x++;
+                listePlato[posActu.x++][posActu.y].presenceJoueur = myplayer;
+                listePlato[posActu.x][posActu.y].presenceJoueur = NULL;
+                
+            }
+        }   
+    }
+    else if(direction==1 && posActu.y!=6)
+    {
+        caseSuivante = listePlato[posActu.x][posActu.y+1];
+        if((caseSuivante.type==typeTuileEnI && (caseSuivante.orientation==1||caseSuivante.orientation==3))||(caseSuivante.type==typeTuileEnL && (caseSuivante.orientation==2 || caseSuivante.orientation==3))||(caseSuivante.type==typeTuileEnT && (caseSuivante.orientation!=3)))
+        {
+            if((caseActuel.type==typeTuileEnI && (caseActuel.orientation==1||caseActuel.orientation==3))||(caseActuel.type==typeTuileEnL && (caseActuel.orientation==1 || caseActuel.orientation==0))||(caseActuel.type==typeTuileEnT && (caseActuel.orientation!=1)))
+            {
+                if(myplayer==NULL)
+                    printf("PTNN");
+                while(getchar()!='\n');
+                myplayer->piece.y++;
+                listePlato[posActu.x][posActu.y++].presenceJoueur = myplayer;
+                listePlato[posActu.x][posActu.y].presenceJoueur = NULL;
+            }
+        }   
+    }
+    else if(direction==3 && posActu.y!=0)
+    {
+        caseSuivante = listePlato[posActu.x][posActu.y-1];
+        if((caseSuivante.type==typeTuileEnI && (caseSuivante.orientation==1||caseSuivante.orientation==3))||(caseSuivante.type==typeTuileEnL && (caseSuivante.orientation==1 || caseSuivante.orientation==0))||(caseSuivante.type==typeTuileEnT && (caseSuivante.orientation!=1)))
+        {
+            if((caseActuel.type==typeTuileEnI && (caseActuel.orientation==1||caseActuel.orientation==3))||(caseActuel.type==typeTuileEnL && (caseActuel.orientation==2 || caseActuel.orientation==3))||(caseActuel.type==typeTuileEnT && (caseActuel.orientation!=3)))
+            {
+                myplayer->piece.y--;
+                listePlato[posActu.x][posActu.y--].presenceJoueur = myplayer;
+                listePlato[posActu.x][posActu.y].presenceJoueur = NULL;
+                
+            }
+        }   
+    }
+    system("clear");
+    printElement(listePlato,tableau);
+    return true;
 
 }

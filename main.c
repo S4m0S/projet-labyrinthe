@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
         tuile tableauLabyrinthe[tailleLabyrinthe][tailleLabyrinthe];
         joueur listJoueur[4];
         //bool test =  init(4,nomJoueurs,listeTest,tableauLabyrinthe,listJoueur);
-        myloop(4,listeTest);
+        myloop(4,listeTest,nomJoueurs);
     }
     else if((int) *argv[1]==49)
     {
