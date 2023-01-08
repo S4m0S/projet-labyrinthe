@@ -166,10 +166,39 @@ void myloop(int nbJoueur,char listePion[4])
     out->posActuelle.y = 1;
     system("cls");
     printElement(tableauTuiles,typeTuile);
-    printTuileOut(out,typeTuile);
-    printf("le type de tuile est : %i",out->orientation);
+    //printTuileOut(out,typeTuile);
+    char input;
     while(getchar()!='\n');
+    do{
+        printf("Bouger la pièce a rajouter ");
+        scanf("%c",&input);
+        if(input =='z')
+        {
+            //bouger la pièce dehors 
+            if(((out->posActuelle.x==-1 || out->posActuelle.x==7) && (out->posActuelle.y!=1||out->posActuelle.y!=6)))
+                printf("mouvement impossible \n");
+            else
+        }
+        else if(input=='s')
+        {i
+            //same
+        }
+        else if(input=='d')
+        {
+            //same 
+        }
+        else if(input=='q')
+        {
+            //same 
+        }
+        else if(input=='r')
+        {
+            out->orientation++;
+            out->orientation=out->posActuelle%4;
+        }
+    }while();
 }
+
 
 
 
