@@ -230,7 +230,7 @@ void myloop(int nbJoueur,char listePion[4])
 
 
 
-
+/*
 void gotoligcol( int lig, int col ) {
 
 // ressources
@@ -261,7 +261,7 @@ void printTuileOut(tuile* out,const char** typeTuile[3])
         printf("\n");
     }
 }
-
+*/
 bool init(int nbJoueurs,string nomJoueurs[4],char listePion[4],tuile tableauTuiles[tailleLabyrinthe][tailleLabyrinthe],joueur listeJoueurs[4],tuile * dehors)         // fonction d'initialisation du jeu une fois celle-ci effectuer on peut commencer a jouer 
 {                       // elle permet d'initialiser toutes les tuiles, de gerer le nombre de joueurs, la distrubution des cartes trésor...
     srand(time(NULL));
