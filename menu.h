@@ -5,11 +5,11 @@
 void menuInitial(){//soit on fait la declaration du choix ici
     int choix;//soit on déclare ici
     do{
-    system("clear");//on est obligé de mettre ça ?? L'usage de cette commande doit être limité, car c'est laid dans un code et plutôt couteux en ressources.
+    system("cls");//on est obligé de mettre ça ?? L'usage de cette commande doit être limité, car c'est laid dans un code et plutôt couteux en ressources.
     printf("1. Nouvelle partie\n 2.Credits/Regles du jeu\n 3.Quitter\n");
     scanf("%d",&choix);}
     while(choix<1&&choix>3);
-    system("clear");
+    system("cls");
     switch(choix){
         case 1:
             char listeNomsJoueurs, listePionsJoueurs;
@@ -40,7 +40,7 @@ void menuBase(void)
 {
     bool running = true;
     int input;
-    system("clear"); // ou clear si windows
+    system("cls"); // ou cls si windows
     do{
         printf("   1. Lancer une partie\n   2. Charger une partie\n   3. Modifiez les parametre\n   4. Quitter \n   Choisisez une option : ");
         scanf("%i",&input);
@@ -64,7 +64,7 @@ void menuBase(void)
             printf("Mauvaise réponse dommage...");
             break;
         }
-        system("clear"); // ou clear sur windows
+        system("cls"); // ou cls sur windows
     }while(running);
 }
 
@@ -79,7 +79,7 @@ void menuLancement(void)
         scanf("%i",&nbJoueur);
         //while(getchar()!='\n');
     }while(nbJoueur<2 || nbJoueur>4);
-    system("clear");
+    system("cls");
     string nomJoueur[4];
     char pionJoueur[4];
     for(int i = 0;i<nbJoueur;i++)
@@ -92,7 +92,7 @@ void menuLancement(void)
         scanf("%c",&pionJoueur[i]);
         while(getchar()!='\n');
         }while(pionJoueur[i]=='#');
-        system("clear");
+        system("cls");
     }
     
     myloop(nbJoueur,nomJoueur,pionJoueur);

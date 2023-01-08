@@ -95,7 +95,7 @@ void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
     bool play = true;
     printf("%c\n",tableauTuiles[0][0].presenceJoueur->affiche);
     while(getchar()!='\n');
-    system("clear");
+    system("cls");
     printElement(tableauTuiles,typeTuile);
     while(getchar()!='\n');
     int tourDe = 0;
@@ -135,7 +135,7 @@ void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
         tourDe++;
         tourDe = tourDe%4;
         //fonction pour check si un joueur a gagner;
-        system("clear");
+        system("cls");
     }
 }
 
@@ -163,7 +163,7 @@ void myloop(int nbJoueur,char listePion[4],string nomJoueur[4])
     repartitionTresors(nbJoueur,listeJoueur,tableauTresor);
     out->posActuelle.x = -1;
     out->posActuelle.y = 1;
-    system("clear");
+    system("cls");
     printElement(tableauTuiles,typeTuile);
     //printTuileOut(out,typeTuile);
     char input;
@@ -173,7 +173,7 @@ void myloop(int nbJoueur,char listePion[4],string nomJoueur[4])
     bool playing = true;
     printf("\nPour vous dirigez utiliser les les touches z/q/s/d, pour tourner une pièce essayer la touche r.\n Enfin pour sortir du jeu c'est la touche a. Pour valider une case se sera g. \n On est parti ? ");
     while(getchar()!='\n');
-    system("clear");
+    system("cls");
     printElement(tableauTuiles,typeTuile);
     
     while(playing){
@@ -715,7 +715,7 @@ void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
     {
 
     }
-    system("clear");
+    system("cls");
     printElement(listePlato,tableauTuile);
 }
 
@@ -726,7 +726,7 @@ void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
             nextCase= listePlato[posActu.x-1][posActu.y];
             if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==2)||(nextCase.orientation==2&&nextCase.type==2)){
                 Joueur.piece.x=nextCase.posActuelle.x;}
-            system("clear");
+            system("cls");
             printElement(listePlato,tableau);
             return true;
     }
@@ -734,7 +734,7 @@ void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
             nextCase= listePlato[posActu.x+1][posActu.y];
             if ((nextCase.orientation==0&&nextCase.type==1)||(nextCase.orientation==3&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==2)||(nextCase.orientation==0&&nextCase.type==2)||(nextCase.orientation==1&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==3&&nextCase.type==0)){
                 Joueur.piece.x=nextCase.posActuelle.x;}
-            system("clear");
+            system("cls");
             printElement(listePlato,tableau);
             return  true;
     }
@@ -742,7 +742,7 @@ void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
             nextCase= listePlato[posActu.x][posActu.y+1];
             if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==2)||(nextCase.orientation==3&&nextCase.type==2)){
                 Joueur.piece.y=nextCase.posActuelle.y;}
-            system("clear");
+            system("cls");
             printElement(listePlato,tableau);
             return true;
     }
@@ -750,7 +750,7 @@ void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][
             nextCase= listePlato[posActu.x][posActu.y-1];
             if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==3&&nextCase.type==0)||(nextCase.orientation==0&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==2)||(nextCase.orientation==3&&nextCase.type==2)){
                 Joueur.piece.y=nextCase.posActuelle.y;}
-            system("clear");
+            system("cls");
             printElement(listePlato,tableau);
             return true;}
     else{
@@ -820,7 +820,7 @@ bool bougerJoueur(joueur *myplayer, position posActu, tuile listePlato[7][7],int
             }
         }   
     }
-    system("clear");
+    system("cls");
     printElement(listePlato,tableau);
     return true;
 
