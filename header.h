@@ -175,26 +175,55 @@ void myloop(int nbJoueur,char listePion[4])
         if(input =='z')
         {
             //bouger la pièce dehors 
-            if(((out->posActuelle.x==-1 || out->posActuelle.x==7) && (out->posActuelle.y!=1||out->posActuelle.y!=6)))
+            if(((out->posActuelle.x==-1 || out->posActuelle.x==7) && (out->posActuelle.y!=1||out->posActuelle.y!=5)))  // pas sur du 5
                 printf("mouvement impossible \n");
-            else
+            else if(out->posActuelle.x<5 && out->posActuelle.x>=1)
+                out->posActuelle.x+=2;
+            else if(out->posActuelle.x==1 && (out->posActuelle.y == -1 || out->posActuelle.y == 7)){
+                out->posActuelle.x=-1;
+                out->posActuelle.y = out->posActuelle.y=7 ? 5:1;
+            }
         }
         else if(input=='s')
-        {i
+        {
+            if(((out->posActuelle.x==-1 || out->posActuelle.x==7) && (out->posActuelle.y!=1||out->posActuelle.y!=5)))   // pas sur du 5 la non plus
+                printf("mouvement impossible \n");
+            else if(out->posActuelle.x>=5 && out->posActuelle.x>1)
+                out->posActuelle.x-=2;
+            else if(out->posActuelle.x==5 && (out->posActuelle.y == -1 || out->posActuelle.y == 7)){
+                out->posActuelle.x=7;
+                out->posActuelle.y = out->posActuelle.y=7 ? 5:1;
+            }
             //same
         }
         else if(input=='d')
         {
+            if(((out->posActuelle.y==-1 || out->posActuelle.y==7) && (out->posActuelle.x!=1||out->posActuelle.x!=5)))   // pas sur du 5 la non plus
+                printf("mouvement impossible \n");
+            else if(out->posActuelle.y<5 && out->posActuelle.y>=1)
+                out->posActuelle.y-=2;
+            else if(out->posActuelle.x==5 && (out->posActuelle.y == -1 || out->posActuelle.y == 7)){        // pas fini encore cette partie
+                out->posActuelle.x=7;
+                out->posActuelle.y = out->posActuelle.y=7 ? 5:1;
+            }
             //same 
         }
         else if(input=='q')
         {
+            if(((out->posActuelle.y==-1 || out->posActuelle.y==7) && (out->posActuelle.x!=1||out->posActuelle.x!=5)))   // pas sur du 5 la non plus
+                printf("mouvement impossible \n");
+            else if(out->posActuelle.y<=5 && out->posActuelle.y>1)
+                out->posActuelle.y+=2;
+            else if(out->posActuelle.x==5 && (out->posActuelle.y == -1 || out->posActuelle.y == 7)){    // ca non plus
+                out->posActuelle.x=7;
+                out->posActuelle.y = out->posActuelle.y=7 ? 5:1;
+            }
             //same 
         }
         else if(input=='r')
         {
             out->orientation++;
-            out->orientation=out->posActuelle%4;
+            out->orientation=out->orientation%4;
         }
     }while();
 }
