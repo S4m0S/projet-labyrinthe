@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+//#include <windows.h>
 
 #include "playing.h"
 //#include <ncursesw/ncurses.h>
@@ -68,7 +68,7 @@ void initialisationTuiles(tuile tableauTuile[tailleLabyrinthe][tailleLabyrinthe]
 void affichageCase(const char fond[3][3],int k,tuile actuelle);
 void initialisationJoueurs(int nbJoueurs, string nomJoueurs[4],joueur listeJoueurs[4],char listePionJoueurs[],tuile listePlateau[tailleLabyrinthe][tailleLabyrinthe]);
 void initTresor(int* indexTresor,tresor* actuel,position* posPiece,tresor listeTresor[nbTresor]);
-bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition);
+void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition,const char** tableauTuile[3]);
 //void inGame(int nbJoueurs,string nomJoueurs[nbJoueurs],char listePion[nbJoueurs]);
 bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3]);
 void repartitionTresors(int nbJoueurs,joueur listeJoueurs[4], tresor listeTresor[nbTresor]);
@@ -95,7 +95,7 @@ void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
     bool play = true;
     printf("%c\n",tableauTuiles[0][0].presenceJoueur->affiche);
     while(getchar()!='\n');
-    system("cls");
+    system("clear");
     printElement(tableauTuiles,typeTuile);
     while(getchar()!='\n');
     int tourDe = 0;
@@ -135,7 +135,7 @@ void inGame(int nbJoueurs,string nomJoueurs[4],char listePion[4]){
         tourDe++;
         tourDe = tourDe%4;
         //fonction pour check si un joueur a gagner;
-        system("cls");
+        system("clear");
     }
 }
 
@@ -160,18 +160,20 @@ void myloop(int nbJoueur,char listePion[4])
     tresor tableauTresor[nbTresor];
     initialisationTuiles(tableauTuiles,tableauTresor,out);
     initialisationJoueurs(nbJoueur,listeNom,listeJoueur,listePion,tableauTuiles);
-    printElement(tableauTuiles,typeTuile);
     repartitionTresors(nbJoueur,listeJoueur,tableauTresor);
     out->posActuelle.x = 0;
     out->posActuelle.y = 1;
-    system("cls");
+    system("clear");
     printElement(tableauTuiles,typeTuile);
     //printTuileOut(out,typeTuile);
     char input;
+    bool pasDeplacer = true;
+    position derniere = {10,10};
     while(getchar()!='\n');
     do{
-        printf("Bouger la pièce a rajouter ");
+        printf("Choisisez un endroit oû bouger la piece : ");
         scanf("%c",&input);
+        while(getchar()!='\n');
         if(input =='z')
         {
             //bouger la pièce dehors 
@@ -202,9 +204,9 @@ void myloop(int nbJoueur,char listePion[4])
                 printf("mouvement impossible \n");
             else if(out->posActuelle.y<5 && out->posActuelle.y>=1)
                 out->posActuelle.y-=2;
-            else if(out->posActuelle.x==5 && (out->posActuelle.y == -1 || out->posActuelle.y == 7)){        // pas fini encore cette partie
-                out->posActuelle.x=7;
-                out->posActuelle.y = out->posActuelle.y=7 ? 5:1;
+            else if(out->posActuelle.y==5 && (out->posActuelle.x == -1 || out->posActuelle.x == 7)){        // pas fini encore cette partie
+                out->posActuelle.y=7;
+                out->posActuelle.x = out->posActuelle.x=7 ? 5:1;
             }
             //same 
         }
@@ -214,9 +216,9 @@ void myloop(int nbJoueur,char listePion[4])
                 printf("mouvement impossible \n");
             else if(out->posActuelle.y<=5 && out->posActuelle.y>1)
                 out->posActuelle.y+=2;
-            else if(out->posActuelle.x==5 && (out->posActuelle.y == -1 || out->posActuelle.y == 7)){    // ca non plus
-                out->posActuelle.x=7;
-                out->posActuelle.y = out->posActuelle.y=7 ? 5:1;
+            else if(out->posActuelle.x==1 && (out->posActuelle.y == -1 || out->posActuelle.y == 7)){    // ca non plus
+                out->posActuelle.y=7;
+                out->posActuelle.x = out->posActuelle.x=7 ? 5:1;
             }
             //same 
         }
@@ -225,7 +227,31 @@ void myloop(int nbJoueur,char listePion[4])
             out->orientation++;
             out->orientation=out->orientation%4;
         }
-    }while();
+        else if(input=='g')
+        {
+            position nouvellePosition = out->posActuelle;
+            if(nouvellePosition.x == derniere.x-6 || nouvellePosition.x == derniere.x+6 || nouvellePosition.y == derniere.y-6 || nouvellePosition.y == derniere.y+6)
+                pasDeplacer=true;
+            else
+                pasDeplacer=false;
+        }
+    }while(input!='g' && pasDeplacer);
+    bougerPiece(out,out->posActuelle,tableauTuiles,&derniere,typeTuile);
+    input = 'm';
+    do{
+        printf("Choisisez où bouger : ");
+        scanf("%c",&input);
+        while(getchar()!='\n');
+        if(input=='z')
+            bougerJoueur(listeJoueur[0],listeJoueur[0].piece,tableauTuiles,0,typeTuile);
+        else if(input=='d')
+            bougerJoueur(listeJoueur[0],listeJoueur[0].piece,tableauTuiles,1,typeTuile);
+        else if(input=='s')
+            bougerJoueur(listeJoueur[0],listeJoueur[0].piece,tableauTuiles,2,typeTuile);
+        else if(input=='q')
+            bougerJoueur(listeJoueur[0],listeJoueur[0].piece,tableauTuiles,3,typeTuile);
+        printf("position joueur : x  :  %i  ;   y   :   %i",listeJoueur[0].piece.x,listeJoueur[0].piece.y);
+    }while(input!='g');
 }
 
 
@@ -639,19 +665,18 @@ int deplacement(tuile *integrer,position oumettre,tuile listePlato[7][7])
     return;
 }
 */
-bool bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition)
+void bougerPiece(tuile* aIntegrer,position nouvellePosition,tuile listePlato[7][7],position* anciennePosition,const char** tableauTuile[3])
 {
-    if(nouvellePosition.x == anciennePosition->x-6 || nouvellePosition.x == anciennePosition->x+6 || nouvellePosition.y == anciennePosition->y-6 || nouvellePosition.y == anciennePosition->y+6)
-        return false;
-    else{
-        *anciennePosition = nouvellePosition;
-        tuile* quiSaute = nouvellePosition.x==0 ? &listePlato[6][nouvellePosition.y]:(nouvellePosition.x==6 ? &listePlato[0][nouvellePosition.y]:(nouvellePosition.y==0 ? &listePlato[nouvellePosition.x][6]:&listePlato[nouvellePosition.x][0]));// test pour savoir quelle est la tuille qui saute
-        int i = quiSaute->posActuelle.x==0 ? 0:(quiSaute->posActuelle.x==6 ? 6:quiSaute->posActuelle.x); 
-        for(i = 0; i < tailleLabyrinthe;i++)
-        {
+    
+    *anciennePosition = nouvellePosition;
+    tuile* quiSaute = nouvellePosition.x==0 ? &listePlato[6][nouvellePosition.y]:(nouvellePosition.x==6 ? &listePlato[0][nouvellePosition.y]:(nouvellePosition.y==0 ? &listePlato[nouvellePosition.x][6]:&listePlato[nouvellePosition.x][0]));// test pour savoir quelle est la tuille qui saute
+    int i = quiSaute->posActuelle.x==0 ? 0:(quiSaute->posActuelle.x==6 ? 6:quiSaute->posActuelle.x); 
+    for(i = 0; i < tailleLabyrinthe;i++)
+    {
 
-        }
     }
+    system("clear");
+    printElement(listePlato,tableauTuile);
 }
 
 
@@ -661,26 +686,45 @@ bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int di
             nextCase= listePlato[posActu.x-1][posActu.y];
             if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==2)||(nextCase.orientation==2&&nextCase.type==2)){
                 Joueur.piece.x=nextCase.posActuelle.x;}
+            system("clear");
+            printElement(listePlato,tableau);
             return true;
     }
     else if(direction==2&&posActu.x+1<=6){
             nextCase= listePlato[posActu.x+1][posActu.y];
             if ((nextCase.orientation==0&&nextCase.type==1)||(nextCase.orientation==3&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==2)||(nextCase.orientation==0&&nextCase.type==2)||(nextCase.orientation==1&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==3&&nextCase.type==0)){
                 Joueur.piece.x=nextCase.posActuelle.x;}
+            system("clear");
+            printElement(listePlato,tableau);
             return  true;
     }
     else if(direction==1&&posActu.y+1<=6){
             nextCase= listePlato[posActu.x][posActu.y+1];
             if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==2&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==2)||(nextCase.orientation==3&&nextCase.type==2)){
                 Joueur.piece.y=nextCase.posActuelle.y;}
+            system("clear");
+            printElement(listePlato,tableau);
             return true;
     }
     else if(direction==3&&posActu.y-1>=0){
             nextCase= listePlato[posActu.x][posActu.y-1];
             if ((nextCase.orientation==0&&nextCase.type==0)||(nextCase.orientation==2&&nextCase.type==0)||(nextCase.orientation==3&&nextCase.type==0)||(nextCase.orientation==0&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==1)||(nextCase.orientation==1&&nextCase.type==2)||(nextCase.orientation==3&&nextCase.type==2)){
                 Joueur.piece.y=nextCase.posActuelle.y;}
+            system("clear");
+            printElement(listePlato,tableau);
             return true;}
     else{
         return false;
     }
+}
+
+bool bougerJoueur(joueur Joueur, position posActu, tuile listePlato[7][7],int direction,const char** tableau[3])
+{
+    tuile caseSuivante;
+    if(direction==0 && posActu.x!=0)
+    {
+        caseSuivante = listePlato[posActu.x-1][posActu.y];
+        if()
+    }
+
 }
