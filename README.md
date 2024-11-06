@@ -1,8 +1,8 @@
 <h1 align="center">Labyrinth Project</h1>
-<p align="center">
+<p align="left">
 *English version – The French version is available below / Version Anglaise - La version Francaise est disponible ci-dessous*
 </p>
-<p align="center">
+<p align="left">
 First project completed at ECE in a team of three with Julien HOGOMMAT and Michaël ADDA
 </p>
 
