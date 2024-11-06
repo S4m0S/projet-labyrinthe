@@ -7,7 +7,7 @@ First project completed at ECE in a team of three with Julien HOGOMMAT and Micha
 </p>
 
 <p align="center">
-<img src="img/image1.jpg" alt="Labyrinth in action" width="400"/>
+<img src="img/image1.png" alt="Labyrinth in action" width="400"/>
 </p>
 
 ---
@@ -23,7 +23,7 @@ This project is a console adaptation of the *Labyrinth* board game by Ravensburg
 This project served as an introduction to dynamic programming in **C**. Without a graphical interface, we focused on game logic and the mechanics of moving pieces within the labyrinth. Although this project is a bit old, it remains an excellent first project for learning the basics of programming in C.
 
 <p align="center">
-<img src="IMAGE2_PATH" alt="Game board illustration" width="400"/>
+<img src="img/image2.png" alt="Game board illustration" width="400"/>
 </p>
 
 ---
@@ -53,7 +53,7 @@ Premier projet effectué au sein de l'ECE en trinôme avec Julien HOGOMMAT et Mi
 </p>
 
 <p align="center">
-<img src="img/image2.jpg" alt="Labyrinthe en action" width="400"/>
+<img src="img/image1.png" alt="Labyrinthe en action" width="400"/>
 </p>
 
 ---
@@ -69,7 +69,7 @@ Ce projet consiste en une adaptation console du jeu de plateau *Labyrinthe* de R
 Ce projet a été une introduction à la programmation dynamique en **C**. Sans interface graphique, nous avons dû nous concentrer sur la logique du jeu et la gestion des déplacements des pièces du labyrinthe. Bien que ce projet soit désormais un peu ancien, il reste un excellent premier projet pour découvrir les bases de la programmation en C.
 
 <p align="center">
-<img src="IMAGE2_PATH" alt="Illustration du plateau de jeu" width="400"/>
+<img src="img/image2.png" alt="Illustration du plateau de jeu" width="400"/>
 </p>
 
 ---
